@@ -3,100 +3,6926 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HomeFix — Professional Marketplace Preview</title>
+<title>HomeFix — Real Service Marketplace</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{--blue:#156ff5;--blue2:#0d5bd3;--ink:#132238;--muted:#6d7b90;--bg:#f5f7fb;--card:#fff;--line:#e5eaf1;--green:#16a06a;--orange:#f39b28;--shadow:0 10px 30px rgba(20,35,55,.08)}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{min-height:100vh}.top{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 28px;gap:24px;position:sticky;top:0;z-index:20}.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px;min-width:190px}.logo{width:36px;height:36px;border-radius:10px;background:var(--blue);color:#fff;display:grid;place-items:center}.topsearch{flex:1;max-width:520px}.topsearch input{width:100%;border:1px solid var(--line);background:#f7f9fc;border-radius:10px;padding:11px 14px}.role{font-size:12px;font-weight:800;color:var(--muted)}.layout{display:flex;min-height:calc(100vh - 68px)}.side{width:240px;background:#fff;border-right:1px solid var(--line);padding:20px 13px;position:sticky;top:68px;height:calc(100vh - 68px)}.side button{width:100%;text-align:left;background:transparent;border:0;padding:12px 13px;border-radius:10px;color:var(--muted);font-weight:700;margin:2px 0}.side button.active,.side button:hover{background:#eaf2ff;color:var(--blue)}.side .sep{height:1px;background:var(--line);margin:16px 8px}.main{flex:1;max-width:1280px;padding:28px;margin:auto}.screen{display:none}.screen.active{display:block}.title{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:22px}.title h1{margin:0;font-size:30px}.title p{margin:6px 0 0;color:var(--muted)}.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:800}.primary{background:var(--blue);color:#fff}.outline{background:#fff;color:var(--ink);border:1px solid var(--line)}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:18px;box-shadow:0 3px 15px rgba(20,35,55,.03)}.stat b{font-size:26px;display:block;margin-top:7px}.stat span,.muted{color:var(--muted);font-size:13px}.sectiongrid{display:grid;grid-template-columns:1.4fr .8fr;gap:18px;margin-top:18px}.jobs{display:grid;gap:12px}.job{display:flex;justify-content:space-between;gap:15px;align-items:center}.jobleft{display:flex;gap:13px;align-items:center}.jobicon{width:45px;height:45px;border-radius:12px;background:#eaf2ff;display:grid;place-items:center;font-size:22px}.job h3{margin:0 0 4px;font-size:15px}.job small{color:var(--muted)}.price{font-weight:900}.tag{display:inline-block;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800;background:#eef7f2;color:var(--green)}.servicegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.service{cursor:pointer}.service:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.service .ico{font-size:27px}.service h3{margin:11px 0 5px}.service p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}.map{height:310px;border-radius:18px;background:#152335;position:relative;overflow:hidden}.map:before{content:"";position:absolute;inset:0;opacity:.18;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:46px 46px}.maplabel{position:absolute;left:20px;top:18px;background:rgba(255,255,255,.1);color:#fff;padding:9px 12px;border-radius:9px;font-size:12px;font-weight:800}.pin{position:absolute;width:18px;height:18px;border-radius:50%;background:#ffd24d;border:3px solid #fff;box-shadow:0 0 0 9px rgba(255,210,77,.15)}.p1{left:25%;top:45%}.p2{left:53%;top:32%}.p3{left:72%;top:60%}.p4{left:61%;top:72%}.form{display:grid;gap:14px}.field label{display:block;font-size:11px;font-weight:900;color:var(--muted);margin-bottom:6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.offers{display:grid;gap:12px}.offer{display:flex;align-items:center;justify-content:space-between;gap:15px}.person{display:flex;gap:12px;align-items:center}.avatar{width:44px;height:44px;border-radius:50%;background:#eaf2ff;display:grid;place-items:center;font-weight:900;color:var(--blue)}.rating{color:#d88a00;font-size:12px}.tabs{display:flex;gap:8px;margin-bottom:16px}.tabs button{background:#fff;border:1px solid var(--line);padding:9px 13px;border-radius:9px;font-weight:800;font-size:12px}.tabs button.sel{background:#eaf2ff;color:var(--blue);border-color:#cfe0ff}.chat{height:360px;display:flex;flex-direction:column}.messages{flex:1;overflow:auto;padding:5px}.msg{max-width:75%;padding:10px 12px;border-radius:12px;margin:8px 0;font-size:13px}.mine{margin-left:auto;background:var(--blue);color:#fff}.theirs{background:#f0f3f7}.chatbar{display:flex;gap:8px}.chatbar input{flex:1;border:1px solid var(--line);border-radius:10px;padding:11px}.profile{display:grid;grid-template-columns:260px 1fr;gap:18px}.profilebox{text-align:center}.bigavatar{width:85px;height:85px;margin:auto;border-radius:50%;background:#eaf2ff;display:grid;place-items:center;font-size:32px;font-weight:900;color:var(--blue)}.list{display:grid;gap:9px}.row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}.notice{background:#fff8e8;border:1px solid #ffe3a5;color:#7b5a1d;padding:12px;border-radius:10px;font-size:12px}.footerline{margin-top:30px;color:var(--muted);font-size:11px;text-align:center}.modal{display:none;position:fixed;inset:0;background:rgba(5,15,28,.55);z-index:50;align-items:center;justify-content:center;padding:18px}.modal.open{display:flex}.modalbox{background:#fff;width:min(560px,100%);border-radius:18px;padding:22px;max-height:90vh;overflow:auto}.modalhead{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#f0f3f7;border-radius:8px;width:34px;height:34px}.toast{position:fixed;right:18px;bottom:18px;background:#102033;color:#fff;padding:12px 15px;border-radius:10px;display:none;z-index:70}.toast.show{display:block}
-@media(max-width:900px){.side{width:74px}.side button{font-size:0;text-align:center}.side button:before{content:"•";font-size:20px}.brand{min-width:auto}.topsearch{display:none}.cards{grid-template-columns:repeat(2,1fr)}.servicegrid{grid-template-columns:repeat(2,1fr)}.sectiongrid,.profile{grid-template-columns:1fr}}
-@media(max-width:600px){.top{padding:0 12px}.main{padding:18px 12px}.side{width:58px}.cards{grid-template-columns:1fr 1fr}.servicegrid,.formgrid{grid-template-columns:1fr}.title{align-items:flex-start;flex-direction:column}.job{align-items:flex-start;flex-direction:column}.offer{align-items:flex-start;flex-direction:column}}
+:root{
+  --blue:#156ff5;
+  --blue2:#0d5bd3;
+  --ink:#132238;
+  --muted:#6d7b90;
+  --bg:#f5f7fb;
+  --card:#fff;
+  --line:#e5eaf1;
+  --green:#16a06a;
+  --orange:#f39b28;
+  --danger:#d64545;
+  --shadow:0 10px 30px rgba(20,35,55,.08)
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink)
+}
+
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+
+.app{min-height:100vh}
+
+.top{
+  height:68px;
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  padding:0 28px;
+  gap:24px;
+  position:sticky;
+  top:0;
+  z-index:20
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  font-size:20px;
+  min-width:190px
+}
+
+.logo{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  background:var(--blue);
+  color:#fff;
+  display:grid;
+  place-items:center
+}
+
+.topsearch{
+  flex:1;
+  max-width:520px
+}
+
+.topsearch input{
+  width:100%;
+  border:1px solid var(--line);
+  background:#f7f9fc;
+  border-radius:10px;
+  padding:11px 14px;
+  outline:none
+}
+
+.role{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted)
+}
+
+.layout{
+  display:flex;
+  min-height:calc(100vh - 68px)
+}
+
+.side{
+  width:240px;
+  background:#fff;
+  border-right:1px solid var(--line);
+  padding:20px 13px;
+  position:sticky;
+  top:68px;
+  height:calc(100vh - 68px);
+  overflow-y:auto
+}
+
+.side button{
+  width:100%;
+  text-align:left;
+  background:transparent;
+  border:0;
+  padding:12px 13px;
+  border-radius:10px;
+  color:var(--muted);
+  font-weight:700;
+  margin:2px 0
+}
+
+.side button.active,
+.side button:hover{
+  background:#eaf2ff;
+  color:var(--blue)
+}
+
+.side .sep{
+  height:1px;
+  background:var(--line);
+  margin:16px 8px
+}
+
+.main{
+  flex:1;
+  max-width:1280px;
+  padding:28px;
+  margin:auto
+}
+
+.screen{display:none}
+.screen.active{display:block}
+
+.title{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:20px;
+  margin-bottom:22px
+}
+
+.title h1{
+  margin:0;
+  font-size:30px
+}
+
+.title p{
+  margin:6px 0 0;
+  color:var(--muted)
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:11px 16px;
+  font-weight:800
+}
+
+.primary{
+  background:var(--blue);
+  color:#fff
+}
+
+.primary:hover{
+  background:var(--blue2)
+}
+
+.outline{
+  background:#fff;
+  color:var(--ink);
+  border:1px solid var(--line)
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:18px;
+  box-shadow:0 3px 15px rgba(20,35,55,.03)
+}
+
+.stat b{
+  font-size:26px;
+  display:block;
+  margin-top:7px
+}
+
+.stat span,
+.muted{
+  color:var(--muted);
+  font-size:13px
+}
+
+.tag{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+  background:#eef7f2;
+  color:var(--green)
+}
+
+.sectiongrid{
+  display:grid;
+  grid-template-columns:1.4fr .8fr;
+  gap:18px;
+  margin-top:18px
+}
+
+.jobs{
+  display:grid;
+  gap:12px
+}
+
+.job{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:center
+}
+
+.jobleft{
+  display:flex;
+  gap:13px;
+  align-items:center
+}
+
+.jobicon{
+  width:45px;
+  height:45px;
+  border-radius:12px;
+  background:#eaf2ff;
+  display:grid;
+  place-items:center;
+  font-size:22px
+}
+
+.job h3{
+  margin:0 0 4px;
+  font-size:15px
+}
+
+.job small{
+  color:var(--muted)
+}
+
+.price{
+  font-weight:900
+}
+
+.servicegrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px
+}
+
+.service{
+  cursor:pointer;
+  transition:.2s
+}
+
+.service:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow)
+}
+
+.service .ico{
+  font-size:27px
+}
+
+.service h3{
+  margin:11px 0 5px
+}
+
+.service p{
+  margin:0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5
+}
+
+.map{
+  height:310px;
+  border-radius:18px;
+  background:#152335;
+  position:relative;
+  overflow:hidden
+}
+
+.map:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.18;
+  background-image:
+    linear-gradient(#fff 1px,transparent 1px),
+    linear-gradient(90deg,#fff 1px,transparent 1px);
+  background-size:46px 46px
+}
+
+.maplabel{
+  position:absolute;
+  left:20px;
+  top:18px;
+  background:rgba(255,255,255,.1);
+  color:#fff;
+  padding:9px 12px;
+  border-radius:9px;
+  font-size:12px;
+  font-weight:800
+}
+
+.pin{
+  position:absolute;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#ffd24d;
+  border:3px solid #fff;
+  box-shadow:0 0 0 9px rgba(255,210,77,.15)
+}
+
+.p1{left:25%;top:45%}
+.p2{left:53%;top:32%}
+.p3{left:72%;top:60%}
+.p4{left:61%;top:72%}
+
+.form{
+  display:grid;
+  gap:14px
+}
+
+.field label{
+  display:block;
+  font-size:11px;
+  font-weight:900;
+  color:var(--muted);
+  margin-bottom:6px
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:12px;
+  background:#fff;
+  outline:none
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:var(--blue)
+}
+
+.formgrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px
+}
+
+.notice{
+  background:#fff8e8;
+  border:1px solid #ffe3a5;
+  color:#7b5a1d;
+  padding:12px;
+  border-radius:10px;
+  font-size:12px
+}
+
+.empty{
+  text-align:center;
+  padding:35px 15px;
+  color:var(--muted)
+}
+
+.error{
+  background:#fff0f0;
+  border:1px solid #ffd0d0;
+  color:var(--danger);
+  padding:12px;
+  border-radius:10px;
+  font-size:13px
+}
+
+.footerline{
+  margin-top:30px;
+  color:var(--muted);
+  font-size:11px;
+  text-align:center
+}
+
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  background:#102033;
+  color:#fff;
+  padding:12px 15px;
+  border-radius:10px;
+  display:none;
+  z-index:70
+}
+
+.toast.show{display:block}
+
+.auth-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(5,15,28,.65);
+  z-index:100;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px
+}
+
+.auth-overlay.open{display:flex}
+
+.auth-box{
+  width:min(460px,100%);
+  background:#fff;
+  border-radius:18px;
+  padding:24px;
+  box-shadow:var(--shadow)
+}
+
+.auth-box h2{
+  margin:0 0 6px
+}
+
+.auth-box p{
+  color:var(--muted);
+  font-size:13px
+}
+
+.auth-tabs{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin:18px 0
+}
+
+.auth-tabs button{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:9px;
+  padding:10px;
+  font-weight:800
+}
+
+.auth-tabs button.active{
+  background:#eaf2ff;
+  color:var(--blue);
+  border-color:#cfe0ff
+}
+
+.auth-form{
+  display:grid;
+  gap:12px
+}
+
+.auth-form input{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:12px;
+  outline:none
+}
+
+.auth-form input:focus{
+  border-color:var(--blue)
+}
+
+.auth-links{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:5px
+}
+
+.linkbtn{
+  border:0;
+  background:transparent;
+  color:var(--blue);
+  font-weight:700;
+  padding:0
+}
+
+.account-area{
+  display:flex;
+  align-items:center;
+  gap:8px
+}
+
+.account-name{
+  max-width:130px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:12px;
+  font-weight:800
+}
+
+@media(max-width:900px){
+  .side{width:74px}
+  .side button{
+    font-size:0;
+    text-align:center
+  }
+  .side button:before{
+    content:"•";
+    font-size:20px
+  }
+  .brand{min-width:auto}
+  .topsearch{display:none}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .servicegrid{grid-template-columns:repeat(2,1fr)}
+  .sectiongrid{grid-template-columns:1fr}
+}
+
+@media(max-width:600px){
+  .top{
+    padding:0 12px;
+    gap:10px
+  }
+
+  .main{padding:18px 12px}
+
+  .side{width:58px}
+
+  .cards{
+    grid-template-columns:1fr 1fr
+  }
+
+  .servicegrid,
+  .formgrid{
+    grid-template-columns:1fr
+  }
+
+  .title{
+    align-items:flex-start;
+    flex-direction:column
+  }
+
+  .job{
+    align-items:flex-start;
+    flex-direction:column
+  }
+
+  .auth-box{
+    padding:18px
+  }
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
-<header class="top"><div class="brand"><div class="logo">H</div> HomeFix</div><div class="topsearch"><input placeholder="Search services, jobs or professionals"></div><div class="role">Customer Preview</div><button class="btn outline" onclick="toast('Account menu demo')">Account</button></header>
+
+<header class="top">
+
+  <div class="brand">
+    <div class="logo">H</div>
+    HomeFix
+  </div>
+
+  <div class="topsearch">
+    <input
+      id="globalSearch"
+      placeholder="Search services, jobs or professionals">
+  </div>
+
+  <div class="account-area">
+
+    <div class="account-name" id="accountName">
+      Guest
+    </div>
+
+    <button
+      class="btn outline"
+      id="accountBtn"
+      onclick="openAccount()">
+      Account
+    </button>
+
+  </div>
+
+</header>
+
 <div class="layout">
+
 <aside class="side">
-<button class="active" data-screen="home">⌂ Home</button>
-<button data-screen="services">⚡ Services</button>
-<button data-screen="post">＋ Post a Job</button>
-<button data-screen="jobs">▣ My Jobs</button>
-<button data-screen="offers">◇ Offers</button>
-<button data-screen="map">⌖ Map</button>
-<button data-screen="chat">◌ Chat</button>
-<button data-screen="profile">◯ Profile</button>
+
+<button class="active" data-screen="home">
+⌂ Home
+</button>
+
+<button data-screen="services">
+⚡ Services
+</button>
+
+<button data-screen="post">
+＋ Post a Job
+</button>
+
+<button data-screen="jobs">
+▣ My Jobs
+</button>
+
+<button data-screen="offers">
+◇ Offers
+</button>
+
+<button data-screen="map">
+⌖ Map
+</button>
+
+<button data-screen="chat">
+◌ Chat
+</button>
+
+<button data-screen="profile">
+◯ Profile
+</button>
+
 <div class="sep"></div>
-<button data-screen="professional">⚙ Professional</button>
-<button data-screen="admin">▤ Admin Preview</button>
+
+<button data-screen="professional">
+⚙ Professional
+</button>
+
+<button data-screen="admin">
+▤ Admin
+</button>
+
 </aside>
 
 <main class="main">
+
 <section class="screen active" id="home">
-<div class="title"><div><h1>Good morning 👋</h1><p>Find trusted home professionals or post a job.</p></div><button class="btn primary" onclick="go('post')">Post a job</button></div>
-<div class="cards">
-<div class="card stat"><span>Active jobs</span><b>2</b><span class="tag">In progress</span></div>
-<div class="card stat"><span>Offers received</span><b>7</b><span class="muted">Across 2 jobs</span></div>
-<div class="card stat"><span>Saved pros</span><b>12</b><span class="muted">Your shortlist</span></div>
-<div class="card stat"><span>Completed</span><b>18</b><span class="muted">This account</span></div>
+
+<div class="title">
+
+<div>
+<h1>Good morning 👋</h1>
+<p>
+Find trusted home professionals or post a real job.
+</p>
 </div>
-<div class="sectiongrid"><div class="card"><div class="title"><div><h2 style="font-size:19px">Recent jobs</h2><p>Latest requests and activity.</p></div><button class="btn outline" onclick="go('jobs')">View all</button></div><div class="jobs">
-<div class="job"><div class="jobleft"><div class="jobicon">⚡</div><div><h3>Electrical panel repair</h3><small>Gulshan-e-Iqbal • Today</small></div></div><div><div class="price">Rs. 450</div><small>3 offers</small></div></div>
-<div class="job"><div class="jobleft"><div class="jobicon">❄️</div><div><h3>AC cooling issue</h3><small>North Nazimabad • Today</small></div></div><div><div class="price">Rs. 1,200</div><small>4 offers</small></div></div>
-<div class="job"><div class="jobleft"><div class="jobicon">🎨</div><div><h3>2-room paint job</h3><small>DHA Phase 6 • Tomorrow</small></div></div><div><span class="tag">Scheduled</span></div></div>
-</div></div>
-<div class="card"><h2 style="font-size:19px;margin-top:0">Your service area</h2><div class="map" style="height:260px"><div class="maplabel">Karachi • Active</div><div class="pin p1"></div><div class="pin p2"></div><div class="pin p3"></div></div></div></div>
+
+<button
+class="btn primary"
+onclick="go('post')">
+Post a job
+</button>
+
+</div>
+
+<div class="cards">
+
+<div class="card stat">
+<span>Active jobs</span>
+<b id="statActiveJobs">0</b>
+<span class="tag">Your account</span>
+</div>
+
+<div class="card stat">
+<span>Offers received</span>
+<b id="statOffers">0</b>
+<span class="muted">Real offers</span>
+</div>
+
+<div class="card stat">
+<span>Saved pros</span>
+<b id="statSaved">0</b>
+<span class="muted">Your shortlist</span>
+</div>
+
+<div class="card stat">
+<span>Completed</span>
+<b id="statCompleted">0</b>
+<span class="muted">Your account</span>
+</div>
+
+</div>
+
+<div class="sectiongrid">
+
+<div class="card">
+
+<div class="title">
+
+<div>
+<h2 style="font-size:19px">
+Recent jobs
+</h2>
+
+<p>
+Latest requests and activity.
+</p>
+</div>
+
+<button
+class="btn outline"
+onclick="go('jobs')">
+View all
+</button>
+
+</div>
+
+<div
+class="jobs"
+id="recentJobs">
+
+<div class="empty">
+Sign in to load your real jobs.
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2 style="font-size:19px;margin-top:0">
+Your service area
+</h2>
+
+<div class="map">
+
+<div class="maplabel">
+🇵🇰 Pakistan • Karachi active
+</div>
+
+<div class="pin p1"></div>
+<div class="pin p2"></div>
+<div class="pin p3"></div>
+<div class="pin p4"></div>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<section class="screen" id="services"><div class="title"><div><h1>Home services</h1><p>Choose a category to start a request.</p></div></div><div class="servicegrid">
-<div class="card service" onclick="prefill('Electrician')"><div class="ico">⚡</div><h3>Electrician</h3><p>Wiring, DB/panel, switches, lights, fault finding and any electrical job.</p></div>
-<div class="card service" onclick="prefill('AC Technician')"><div class="ico">❄️</div><h3>AC Technician</h3><p>Installation, service, cooling, repair and maintenance.</p></div>
-<div class="card service" onclick="prefill('Plumber')"><div class="ico">🚰</div><h3>Plumber</h3><p>Pipes, leaks, bathrooms, kitchens, tanks and drainage.</p></div>
-<div class="card service" onclick="prefill('Handyman')"><div class="ico">🛠️</div><h3>Handyman</h3><p>General repairs, installation and everyday maintenance.</p></div>
-<div class="card service" onclick="prefill('Painter')"><div class="ico">🎨</div><h3>Painter</h3><p>Rooms, interiors, exteriors and complete house painting.</p></div>
-<div class="card service" onclick="prefill('Carpenter')"><div class="ico">🪚</div><h3>Carpenter</h3><p>Doors, cabinets, furniture, kitchens and woodwork.</p></div>
-<div class="card service" onclick="prefill('Appliance Repair')"><div class="ico">🔧</div><h3>Appliance Repair</h3><p>Fridge, washing machine, microwave, oven and any appliance problem.</p></div>
-<div class="card service" onclick="prefill('Complete Home Project')"><div class="ico">🏠</div><h3>Complete Home Project</h3><p>Combine multiple trades for renovation and maintenance.</p></div>
-<div class="card service" onclick="prefill('Mechanic / Vehicle')"><div class="icon">🏍️</div><h3>Mechanic / Vehicle</h3><p>Bike, car, engine, brake, electrical, diagnostics and roadside jobs.</p></div>
-<div class="card service" onclick="prefill('Custom / Other')"><div class="icon">＋</div><h3>Any Other Job</h3><p>Post a custom problem even when it is not in the category list.</p></div>
-</div></section>
+<!-- PART 2 CONTINUES HERE -->
+  <section class="screen" id="services">
 
-<section class="screen" id="post"><div class="title"><div><h1>Post a job</h1><p>Tell professionals what you need. They can send offers.</p></div></div><div class="card"><div class="form"><div class="formgrid"><div class="field"><label>SERVICE</label><select id="svc"><option>Electrician</option><option>AC Technician</option><option>Plumber</option><option>Handyman</option><option>Painter</option><option>Carpenter</option><option>Appliance Repair</option><option>Complete Home Project</option><option>Mechanic / Vehicle</option><option>Custom / Other</option></select></div><div class="field"><label>LOCATION</label><input id="loc" placeholder="Area / address in Pakistan"></div></div><div class="field"><label>JOB TITLE</label><input id="jt" placeholder="e.g. Main electrical panel has a problem"></div><div class="field"><label>DESCRIPTION</label><textarea id="desc" rows="5" placeholder="Describe the problem, size of work, preferred time, etc."></textarea></div><div class="formgrid"><div class="field"><label>BUDGET (OPTIONAL)</label><input id="budget" type="number" placeholder="Rs."></div><div class="field"><label>PREFERRED TIME</label><select><option>As soon as possible</option><option>Today</option><option>Tomorrow</option><option>This week</option></select></div></div><div class="field"><label>PHOTOS / VIDEO</label><input type="file" accept="image/*,video/*" multiple></div><div class="notice">📍 Location and service area matching will be connected to the real map/backend in the next build phase.</div><button class="btn primary" onclick="postDemo()">Post job & receive offers</button></div></div></section>
+<div class="title">
+  <div>
+    <h1>Home services</h1>
+    <p>Choose a real service from Supabase to start a request.</p>
+  </div>
+</div>
 
-<section class="screen" id="jobs"><div class="title"><div><h1>My jobs</h1><p>Track requests from posting to completion.</p></div></div><div class="tabs"><button class="sel">All</button><button>Active</button><button>Completed</button></div><div class="jobs">
-<div class="card job"><div class="jobleft"><div class="jobicon">⚡</div><div><h3>Electrical panel repair</h3><small>Gulshan-e-Iqbal • Posted today • 3 offers</small></div></div><div><span class="tag">Offers</span><button class="btn primary" onclick="go('offers')" style="margin-left:7px">View</button></div></div>
-<div class="card job"><div class="jobleft"><div class="jobicon">❄️</div><div><h3>AC cooling issue</h3><small>North Nazimabad • Technician selected</small></div></div><div><span class="tag">On the way</span></div></div>
-<div class="card job"><div class="jobleft"><div class="jobicon">🎨</div><div><h3>2-room paint job</h3><small>DHA Phase 6 • Tomorrow</small></div></div><div><span class="tag">Scheduled</span></div></div>
-</div></section>
+<div
+  class="servicegrid"
+  id="servicesGrid">
 
-<section class="screen" id="offers"><div class="title"><div><h1>Offers</h1><p>Compare professionals before choosing.</p></div></div><div class="card"><h3 style="margin-top:0">Electrical panel repair</h3><p class="muted">Gulshan-e-Iqbal • Your budget: Rs. 500</p><div class="offers">
-<div class="offer"><div class="person"><div class="avatar">AK</div><div><b>Ali Khan</b><div class="rating">★★★★★ 4.9 • 86 jobs • 1.2 km</div></div></div><div><b>Rs. 400</b><br><button class="btn primary" onclick="selectPro('Ali Khan')">Select</button></div></div>
-<div class="offer"><div class="person"><div class="avatar">HM</div><div><b>Hassan Malik</b><div class="rating">★★★★★ 4.8 • 51 jobs • 2.0 km</div></div></div><div><b>Rs. 450</b><br><button class="btn primary" onclick="selectPro('Hassan Malik')">Select</button></div></div>
-<div class="offer"><div class="person"><div class="avatar">SR</div><div><b>Saad Raza</b><div class="rating">★★★★☆ 4.6 • 33 jobs • 3.4 km</div></div></div><div><b>Rs. 350</b><br><button class="btn primary" onclick="selectPro('Saad Raza')">Select</button></div></div>
-</div></div></section>
+  <div class="empty">
+    Loading services...
+  </div>
 
-<section class="screen" id="map"><div class="title"><div><h1>Map & nearby professionals</h1><p>Pakistan-ready map structure with Karachi active for launch.</p></div></div><div class="card"><div class="map" style="height:500px"><div class="maplabel">🇵🇰 Pakistan • Karachi active</div><div class="pin p1"></div><div class="pin p2"></div><div class="pin p3"></div><div class="pin p4"></div></div><div style="display:flex;gap:10px;margin-top:14px"><button class="btn primary" onclick="toast('Location permission demo')">Use my location</button><button class="btn outline" onclick="toast('Nearby professional filter demo')">Nearby professionals</button></div></div></section>
+</div>
 
-<section class="screen" id="chat"><div class="title"><div><h1>Chat</h1><p>Customer and professional communication.</p></div></div><div class="card chat"><div class="messages" id="messages"><div class="msg theirs">Hello, I can reach you in about 20 minutes.</div><div class="msg mine">Okay. Please call when you arrive.</div><div class="msg theirs">Sure. I have accepted the job details.</div></div><div class="chatbar"><input id="chatinput" placeholder="Write a message..."><button class="btn primary" onclick="sendChat()">Send</button></div></div></section>
+</section>
 
-<section class="screen" id="profile"><div class="title"><div><h1>Profile</h1><p>Your customer account and activity.</p></div><button class="btn outline" onclick="toast('Profile edit demo')">Edit profile</button></div><div class="profile"><div class="card profilebox"><div class="bigavatar">K</div><h2 style="margin-bottom:5px">Customer</h2><div class="rating">★★★★★ 4.9</div><p class="muted">Karachi, Pakistan</p></div><div class="card"><h3 style="margin-top:0">Account overview</h3><div class="list"><div class="row"><span>Completed jobs</span><b>18</b></div><div class="row"><span>Reviews given</span><b>16</b></div><div class="row"><span>Saved professionals</span><b>12</b></div><div class="row"><span>Member since</span><b>2026</b></div></div></div></div></section>
 
-<section class="screen" id="professional"><div class="title"><div><h1>Professional mode</h1><p>Preview of the worker/technician side.</p></div><span class="tag">Professional</span></div><div class="cards"><div class="card stat"><span>Nearby jobs</span><b>14</b></div><div class="card stat"><span>Offers sent</span><b>6</b></div><div class="card stat"><span>Active jobs</span><b>2</b></div><div class="card stat"><span>Rating</span><b>4.9</b></div></div><div class="sectiongrid"><div class="card"><h3>Nearby jobs</h3><div class="jobs"><div class="job"><div class="jobleft"><div class="jobicon">⚡</div><div><h3>DB panel repair</h3><small>Gulshan • 1.4 km</small></div></div><button class="btn primary" onclick="toast('Offer form demo')">Send offer</button></div><div class="job"><div class="jobleft"><div class="jobicon">🚰</div><div><h3>Kitchen leakage</h3><small>Johar • 3.2 km</small></div></div><button class="btn primary" onclick="toast('Offer form demo')">Send offer</button></div></div></div><div class="card"><h3>My services</h3><p class="muted">Electrician • Wiring • Panel • Installation</p><button class="btn outline" onclick="toast('Service settings demo')">Manage services</button></div></div></section>
+<section class="screen" id="post">
 
-<section class="screen" id="admin"><div class="title"><div><h1>Admin dashboard</h1><p>Platform management preview.</p></div><span class="tag">Admin</span></div><div class="cards"><div class="card stat"><span>Customers</span><b>1,248</b></div><div class="card stat"><span>Professionals</span><b>386</b></div><div class="card stat"><span>Active jobs</span><b>92</b></div><div class="card stat"><span>Completed</span><b>4,761</b></div></div><div class="sectiongrid"><div class="card"><h3>Management</h3><div class="list"><div class="row"><span>Worker verification</span><b>18 pending</b></div><div class="row"><span>Complaints</span><b>7 open</b></div><div class="row"><span>Payments</span><b>Rs. 248k</b></div><div class="row"><span>Service categories</span><b>∞</b></div><div class="row"><span>Active cities</span><b>1 / Pakistan</b></div></div></div><div class="card"><h3>Platform principle</h3><p class="muted">One backend can serve the website and future Android app. Cities and services are data-driven so expansion does not require rebuilding the core system.</p></div></div></section>
+<div class="title">
+  <div>
+    <h1>Post a job</h1>
+    <p>Your request will be saved directly to Supabase.</p>
+  </div>
+</div>
 
-<div class="footerline">HomeFix professional multi-screen prototype • Any legitimate service/job can be posted; categories are expandable. Real backend, map, payments, notifications and Android build come after the UX is approved.</div>
-</main></div></div>
+<div class="card">
 
-<div class="modal" id="modal"><div class="modalbox"><div class="modalhead"><h2 id="mt" style="margin:0">Details</h2><button class="close" onclick="closeModal()">✕</button></div><div id="mb" style="margin-top:16px"></div></div></div>
-<div class="toast" id="toast"></div>
-<script>
-function go(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.side button').forEach(x=>x.classList.toggle('active',x.dataset.screen===id));window.scrollTo({top:0,behavior:'smooth'})}
-document.querySelectorAll('.side button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.screen)));
-function prefill(s){go('post');document.getElementById('svc').value=s}
-function postDemo(){const l=document.getElementById('loc').value,d=document.getElementById('desc').value;if(!l||!d){toast('Please add location and description.');return}toast('Job posted in demo mode — offers screen is ready to test.');setTimeout(()=>go('offers'),500)}
-function selectPro(n){toast(n+' selected in demo mode.');setTimeout(()=>go('chat'),500)}
-function sendChat(){const i=document.getElementById('chatinput');if(!i.value.trim())return;const m=document.createElement('div');m.className='msg mine';m.textContent=i.value;i.value='';document.getElementById('messages').appendChild(m)}
-function toast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),2500)}
-function closeModal(){document.getElementById('modal').classList.remove('open')}
+<div class="form">
+
+<div class="formgrid">
+
+<div class="field">
+
+<label>SERVICE</label>
+
+<select id="svc">
+  <option value="">Loading services...</option>
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>LOCATION / ADDRESS</label>
+
+<input
+  id="loc"
+  type="text"
+  placeholder="Area / address in Pakistan">
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>JOB TITLE</label>
+
+<input
+  id="jt"
+  type="text"
+  placeholder="What work do you need?">
+
+</div>
+
+
+<div class="field">
+
+<label>DESCRIPTION</label>
+
+<textarea
+  id="desc"
+  rows="5"
+  placeholder="Describe the problem, size of work and preferred time"></textarea>
+
+</div>
+
+
+<div class="formgrid">
+
+<div class="field">
+
+<label>BUDGET (OPTIONAL)</label>
+
+<input
+  id="budget"
+  type="number"
+  min="0"
+  step="1"
+  placeholder="Rs.">
+
+</div>
+
+
+<div class="field">
+
+<label>PREFERRED TIME</label>
+
+<select id="scheduleType">
+
+<option value="asap">
+As soon as possible
+</option>
+
+<option value="today">
+Today
+</option>
+
+<option value="tomorrow">
+Tomorrow
+</option>
+
+<option value="week">
+This week
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div class="formgrid">
+
+<div class="field">
+
+<label>LATITUDE</label>
+
+<input
+  id="latitude"
+  type="number"
+  step="any"
+  placeholder="Optional">
+
+</div>
+
+
+<div class="field">
+
+<label>LONGITUDE</label>
+
+<input
+  id="longitude"
+  type="number"
+  step="any"
+  placeholder="Optional">
+
+</div>
+
+</div>
+
+
+<div class="notice">
+
+📍 Location is stored in the real
+<code>jobs</code> table.
+Karachi is the active launch area.
+
+</div>
+
+
+<button
+  class="btn outline"
+  type="button"
+  onclick="getCurrentLocation()">
+
+📍 Use my current location
+
+</button>
+
+
+<button
+  class="btn primary"
+  type="button"
+  id="postJobBtn"
+  onclick="postRealJob()">
+
+Post job & receive offers
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="screen" id="jobs">
+
+<div class="title">
+
+<div>
+<h1>My jobs</h1>
+
+<p>
+Track your real requests from Supabase.
+</p>
+</div>
+
+<button
+class="btn primary"
+onclick="go('post')">
+
+＋ New job
+
+</button>
+
+</div>
+
+
+<div class="tabs">
+
+<button
+class="sel"
+onclick="filterJobs('all',this)">
+All
+</button>
+
+<button
+onclick="filterJobs('active',this)">
+Active
+</button>
+
+<button
+onclick="filterJobs('completed',this)">
+Completed
+</button>
+
+</div>
+
+
+<div
+class="jobs"
+id="myJobs">
+
+<div class="empty">
+Sign in to load your jobs.
+</div>
+
+</div>
+
+</section>
+
+
+<section class="screen" id="offers">
+
+<div class="title">
+
+<div>
+<h1>Offers</h1>
+
+<p>
+Real offers submitted by professionals.
+</p>
+
+</div>
+
+</div>
+
+
+<div
+id="offersContainer">
+
+<div class="empty">
+Select a job to view its offers.
+</div>
+
+</div>
+
+</section>
+
+
+<section class="screen" id="map">
+
+<div class="title">
+
+<div>
+
+<h1>Map & nearby professionals</h1>
+
+<p>
+Pakistan-ready structure with Karachi active for launch.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div
+class="map"
+style="height:500px">
+
+<div class="maplabel">
+🇵🇰 Pakistan • Karachi active
+</div>
+
+<div class="pin p1"></div>
+<div class="pin p2"></div>
+<div class="pin p3"></div>
+<div class="pin p4"></div>
+
+</div>
+
+
+<div
+style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+
+<button
+class="btn primary"
+onclick="getCurrentLocation()">
+
+📍 Use my location
+
+</button>
+
+<button
+class="btn outline"
+onclick="loadNearbyProfessionals()">
+
+Nearby professionals
+
+</button>
+
+</div>
+
+
+<div
+class="card"
+style="margin-top:14px">
+
+<h3 style="margin-top:0">
+Nearby professionals
+</h3>
+
+<div
+id="nearbyProfessionals">
+
+<div class="empty">
+Use your location to search.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="screen" id="chat">
+
+<div class="title">
+
+<div>
+
+<h1>Chat</h1>
+
+<p>
+Customer and professional communication.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card chat">
+
+<div
+class="messages"
+id="messages">
+
+<div class="empty">
+Chat will be connected to the selected job/professional.
+</div>
+
+</div>
+
+
+<div class="chatbar">
+
+<input
+id="chatinput"
+placeholder="Write a message..."
+autocomplete="off">
+
+<button
+class="btn primary"
+onclick="sendChat()">
+
+Send
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="screen" id="profile">
+
+<div class="title">
+
+<div>
+
+<h1>Profile</h1>
+
+<p>
+Your real customer/professional account.
+</p>
+
+</div>
+
+<button
+class="btn outline"
+onclick="editProfile()">
+
+Edit profile
+
+</button>
+
+</div>
+
+
+<div class="profile">
+
+<div class="card profilebox">
+
+<div
+class="bigavatar"
+id="profileAvatar">
+
+?
+
+</div>
+
+
+<h2
+id="profileName"
+style="margin-bottom:5px">
+
+Guest
+
+</h2>
+
+
+<div
+class="rating"
+id="profileRole">
+
+Not signed in
+
+</div>
+
+
+<p
+class="muted"
+id="profilePhone">
+
+—
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3 style="margin-top:0">
+Account overview
+</h3>
+
+
+<div class="list">
+
+<div class="row">
+<span>Completed jobs</span>
+<b id="profileCompleted">0</b>
+</div>
+
+
+<div class="row">
+<span>Offers received</span>
+<b id="profileOfferCount">0</b>
+</div>
+
+
+<div class="row">
+<span>Member since</span>
+<b id="profileSince">—</b>
+</div>
+
+
+<div class="row">
+<span>Account role</span>
+<b id="profileRoleValue">—</b>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="screen" id="professional">
+
+<div class="title">
+
+<div>
+
+<h1>Professional mode</h1>
+
+<p>
+Real professional account and nearby jobs.
+</p>
+
+</div>
+
+<span
+class="tag">
+Professional
+</span>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card stat">
+
+<span>Nearby jobs</span>
+
+<b id="proNearbyCount">
+0
+</b>
+
+</div>
+
+
+<div class="card stat">
+
+<span>Offers sent</span>
+
+<b id="proOffersCount">
+0
+</b>
+
+</div>
+
+
+<div class="card stat">
+
+<span>Active jobs</span>
+
+<b id="proActiveCount">
+0
+</b>
+
+</div>
+
+
+<div class="card stat">
+
+<span>Completed</span>
+
+<b id="proCompletedCount">
+0
+</b>
+
+</div>
+
+</div>
+
+
+<div
+class="sectiongrid">
+
+<div class="card">
+
+<h3>
+Nearby jobs
+</h3>
+
+<div
+class="jobs"
+id="professionalJobs">
+
+<div class="empty">
+Sign in as a professional to load jobs.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+My services
+</h3>
+
+<div
+id="professionalServices">
+
+<div class="empty">
+Your services will appear here.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="screen" id="admin">
+
+<div class="title">
+
+<div>
+
+<h1>Admin dashboard</h1>
+
+<p>
+Platform management.
+</p>
+
+</div>
+
+<span
+class="tag">
+Admin
+</span>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card stat">
+
+<span>Customers</span>
+
+<b id="adminCustomers">
+0
+</b>
+
+</div>
+
+
+<div class="card stat">
+
+<span>Professionals</span>
+
+<b id="adminProfessionals">
+0
+</b>
+
+</div>
+
+
+<div class="card stat">
+
+<span>Total jobs</span>
+
+<b id="adminJobs">
+0
+</b>
+
+</div>
+
+
+<div class="card stat">
+
+<span>Completed</span>
+
+<b id="adminCompleted">
+0
+</b>
+
+</div>
+
+</div>
+
+
+<div
+class="sectiongrid">
+
+<div class="card">
+
+<h3>
+Platform data
+</h3>
+
+<div class="list">
+
+<div class="row">
+<span>Profiles</span>
+<b id="adminProfilesCount">0</b>
+</div>
+
+
+<div class="row">
+<span>Services</span>
+<b id="adminServicesCount">0</b>
+</div>
+
+
+<div class="row">
+<span>Jobs</span>
+<b id="adminJobsCount">0</b>
+</div>
+
+
+<div class="row">
+<span>Offers</span>
+<b id="adminOffersCount">0</b>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Platform status
+</h3>
+
+<p
+class="muted"
+id="adminStatus">
+
+Waiting for admin account.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<div class="footerline">
+
+HomeFix • Real Supabase-powered service marketplace
+
+</div>
+
+
+</main>
+
+</div>
+
+</div>
+
+
+<!-- ACCOUNT / AUTH MODAL -->
+
+<div
+class="auth-overlay"
+id="authOverlay">
+
+<div class="auth-box">
+
+<div
+style="display:flex;justify-content:space-between;align-items:center">
+
+<div>
+
+<h2 id="authTitle">
+Sign in to HomeFix
+</h2>
+
+<p id="authSubtitle">
+Use your account to access your jobs and services.
+</p>
+
+</div>
+
+
+<button
+class="close"
+onclick="closeAccount()">
+
+✕
+
+</button>
+
+</div>
+
+
+<div
+class="auth-tabs">
+
+<button
+id="emailTab"
+class="active"
+onclick="showAuthMode('email')">
+
+Email
+
+</button>
+
+
+<button
+id="phoneTab"
+onclick="showAuthMode('phone')">
+
+Phone
+
+</button>
+
+</div>
+
+
+<div
+class="auth-form"
+id="emailAuthForm">
+
+<input
+id="authEmail"
+type="email"
+placeholder="Email address"
+autocomplete="email">
+
+
+<input
+id="authPassword"
+type="password"
+placeholder="Password"
+autocomplete="current-password">
+
+
+<button
+class="btn primary"
+onclick="signInEmail()">
+
+Sign in
+
+</button>
+
+
+<button
+class="btn outline"
+onclick="signUpEmail()">
+
+Create new account
+
+</button>
+
+
+<div
+class="auth-links">
+
+<button
+class="linkbtn"
+onclick="resetPassword()">
+
+Forgot password?
+
+</button>
+
+</div>
+
+
+<div
+style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+
+<button
+class="btn outline"
+onclick="signInOAuth('google')">
+
+Continue with Google
+
+</button>
+
+
+<button
+class="btn outline"
+onclick="signInOAuth('twitter')">
+
+Continue with Twitter
+
+</button>
+
+</div>
+
+</div>
+
+
+<div
+class="auth-form"
+id="phoneAuthForm"
+style="display:none">
+
+<input
+id="authPhone"
+type="tel"
+placeholder="+92XXXXXXXXXX"
+autocomplete="tel">
+
+
+<input
+id="authPhonePassword"
+type="password"
+placeholder="Password"
+autocomplete="current-password">
+
+
+<button
+class="btn primary"
+onclick="signInPhone()">
+
+Sign in with phone
+
+</button>
+
+
+<button
+class="btn outline"
+onclick="sendPhoneOTP()">
+
+Send phone OTP
+
+</button>
+
+</div>
+
+
+<div
+id="authMessage"
+style="margin-top:12px">
+
+</div>
+
+</div>
+
+</div>
+
+
+<div
+class="toast"
+id="toast">
+
+</div>
+
+
+<!-- PART 3 CONTINUES HERE -->
+  <script>
+/* =========================================================
+   HOMEFIX — PART 3/5
+   SUPABASE CONNECTION + AUTH + REAL DATA
+   ========================================================= */
+
+/*
+  IMPORTANT:
+  یہاں اپنے Supabase project کی اصل values لگائیں۔
+
+  Supabase Dashboard:
+  Settings → API
+
+  Project URL  → SUPABASE_URL
+  Publishable/Anon Key → SUPABASE_ANON_KEY
+*/
+
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+let supabaseClient = null;
+let currentUser = null;
+let currentProfile = null;
+let currentJobId = null;
+let currentJobFilter = "all";
+
+
+/* ---------------------------------------------------------
+   SUPABASE START
+   --------------------------------------------------------- */
+
+function initSupabase(){
+
+  if(
+    !SUPABASE_URL ||
+    !SUPABASE_ANON_KEY ||
+    SUPABASE_URL === "YOUR_SUPABASE_URL" ||
+    SUPABASE_ANON_KEY === "YOUR_SUPABASE_ANON_KEY"
+  ){
+
+    showAuthMessage(
+      "Supabase URL اور Anon/Publishable Key ابھی شامل کریں۔",
+      "error"
+    );
+
+    return false;
+  }
+
+  try{
+
+    supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+      );
+
+    return true;
+
+  }catch(error){
+
+    console.error(error);
+
+    showAuthMessage(
+      "Supabase connection شروع نہیں ہو سکی۔",
+      "error"
+    );
+
+    return false;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   NAVIGATION
+   --------------------------------------------------------- */
+
+function go(id){
+
+  const screen =
+    document.getElementById(id);
+
+  if(!screen) return;
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(x =>
+      x.classList.remove("active")
+    );
+
+  screen.classList.add("active");
+
+  document
+    .querySelectorAll(".side button")
+    .forEach(x =>
+      x.classList.toggle(
+        "active",
+        x.dataset.screen === id
+      )
+    );
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+
+  /* Load real data when opening screens */
+
+  if(id === "home"){
+    loadDashboard();
+  }
+
+  if(id === "services"){
+    loadServices();
+  }
+
+  if(id === "jobs"){
+    loadMyJobs();
+  }
+
+  if(id === "profile"){
+    loadProfile();
+  }
+
+  if(id === "professional"){
+    loadProfessional();
+  }
+
+  if(id === "admin"){
+    loadAdmin();
+  }
+
+  if(id === "offers" && currentJobId){
+    loadOffers(currentJobId);
+  }
+}
+
+
+document
+  .querySelectorAll(".side button")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => go(button.dataset.screen)
+    );
+
+  });
+
+
+/* ---------------------------------------------------------
+   TOAST
+   --------------------------------------------------------- */
+
+function toast(message){
+
+  const box =
+    document.getElementById("toast");
+
+  if(!box) return;
+
+  box.textContent = message;
+
+  box.classList.add("show");
+
+  clearTimeout(
+    window.__toastTimer
+  );
+
+  window.__toastTimer =
+    setTimeout(() => {
+
+      box.classList.remove("show");
+
+    },2500);
+}
+
+
+/* ---------------------------------------------------------
+   HTML SAFETY
+   --------------------------------------------------------- */
+
+function escapeHtml(value){
+
+  if(value === null || value === undefined){
+    return "";
+  }
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+/* ---------------------------------------------------------
+   AUTH MODAL
+   --------------------------------------------------------- */
+
+function openAccount(){
+
+  const overlay =
+    document.getElementById("authOverlay");
+
+  if(currentUser){
+
+    const confirmed =
+      confirm(
+        "آپ پہلے سے signed in ہیں۔ Sign out کرنا چاہتے ہیں؟"
+      );
+
+    if(confirmed){
+      signOut();
+    }
+
+    return;
+  }
+
+  overlay.classList.add("open");
+
+  showAuthMode("email");
+}
+
+
+function closeAccount(){
+
+  document
+    .getElementById("authOverlay")
+    .classList.remove("open");
+
+}
+
+
+function showAuthMode(mode){
+
+  const emailForm =
+    document.getElementById("emailAuthForm");
+
+  const phoneForm =
+    document.getElementById("phoneAuthForm");
+
+  const emailTab =
+    document.getElementById("emailTab");
+
+  const phoneTab =
+    document.getElementById("phoneTab");
+
+
+  if(mode === "phone"){
+
+    emailForm.style.display = "none";
+    phoneForm.style.display = "grid";
+
+    emailTab.classList.remove("active");
+    phoneTab.classList.add("active");
+
+  }else{
+
+    emailForm.style.display = "grid";
+    phoneForm.style.display = "none";
+
+    emailTab.classList.add("active");
+    phoneTab.classList.remove("active");
+
+  }
+
+  clearAuthMessage();
+}
+
+
+/* ---------------------------------------------------------
+   AUTH MESSAGE
+   --------------------------------------------------------- */
+
+function showAuthMessage(
+  message,
+  type="error"
+){
+
+  const box =
+    document.getElementById("authMessage");
+
+  if(!box) return;
+
+  box.className =
+    type === "error"
+      ? "error"
+      : "notice";
+
+  box.textContent = message;
+}
+
+
+function clearAuthMessage(){
+
+  const box =
+    document.getElementById("authMessage");
+
+  if(!box) return;
+
+  box.className = "";
+
+  box.textContent = "";
+}
+
+
+/* ---------------------------------------------------------
+   EMAIL SIGN IN
+   --------------------------------------------------------- */
+
+async function signInEmail(){
+
+  if(!supabaseClient){
+    toast("Supabase connect نہیں ہے۔");
+    return;
+  }
+
+  const email =
+    document
+      .getElementById("authEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("authPassword")
+      .value;
+
+
+  if(!email || !password){
+
+    showAuthMessage(
+      "Email اور password دونوں درج کریں۔"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    currentUser =
+      data.user || null;
+
+
+    closeAccount();
+
+    toast("Sign in successful.");
+
+    await afterAuth();
+
+  }catch(error){
+
+    console.error(error);
+
+    showAuthMessage(
+      error.message ||
+      "Sign in failed."
+    );
+  }
+}
+
+
+/* ---------------------------------------------------------
+   EMAIL SIGN UP
+   --------------------------------------------------------- */
+
+async function signUpEmail(){
+
+  if(!supabaseClient){
+    toast("Supabase connect نہیں ہے۔");
+    return;
+  }
+
+
+  const email =
+    document
+      .getElementById("authEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("authPassword")
+      .value;
+
+
+  if(!email || !password){
+
+    showAuthMessage(
+      "New account کے لیے email اور password درج کریں۔"
+    );
+
+    return;
+  }
+
+
+  if(password.length < 6){
+
+    showAuthMessage(
+      "Password کم از کم 6 characters کا ہونا چاہیے۔"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.signUp({
+
+        email,
+
+        password
+
+      });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    if(data.session){
+
+      currentUser =
+        data.user || null;
+
+      closeAccount();
+
+      toast(
+        "Account successfully created."
+      );
+
+      await afterAuth();
+
+    }else{
+
+      showAuthMessage(
+        "Account بن گیا ہے۔ اگر email confirmation آن ہے تو اپنے email کو verify کریں، پھر sign in کریں۔",
+        "notice"
+      );
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    showAuthMessage(
+      error.message ||
+      "Account creation failed."
+    );
+  }
+}
+
+
+/* ---------------------------------------------------------
+   FORGOT PASSWORD
+   --------------------------------------------------------- */
+
+async function resetPassword(){
+
+  if(!supabaseClient){
+    toast("Supabase connect نہیں ہے۔");
+    return;
+  }
+
+
+  const email =
+    document
+      .getElementById("authEmail")
+      .value
+      .trim();
+
+
+  if(!email){
+
+    showAuthMessage(
+      "Password reset کے لیے پہلے email لکھیں۔"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient.auth
+        .resetPasswordForEmail(
+          email,
+          {
+            redirectTo:
+              window.location.origin +
+              window.location.pathname
+          }
+        );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    showAuthMessage(
+      "Password reset email بھیج دی گئی ہے۔ اپنا inbox check کریں۔",
+      "notice"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showAuthMessage(
+      error.message ||
+      "Password reset failed."
+    );
+  }
+}
+
+
+/* ---------------------------------------------------------
+   GOOGLE / TWITTER OAUTH
+   --------------------------------------------------------- */
+
+async function signInOAuth(provider){
+
+  if(!supabaseClient){
+    toast("Supabase connect نہیں ہے۔");
+    return;
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient.auth.signInWithOAuth({
+
+        provider,
+
+        options:{
+          redirectTo:
+            window.location.href
+        }
+
+      });
+
+
+    if(error){
+      throw error;
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    showAuthMessage(
+      error.message ||
+      provider + " login failed."
+    );
+  }
+}
+
+
+/* ---------------------------------------------------------
+   PHONE LOGIN
+   --------------------------------------------------------- */
+
+async function signInPhone(){
+
+  if(!supabaseClient){
+    toast("Supabase connect نہیں ہے۔");
+    return;
+  }
+
+
+  const phone =
+    document
+      .getElementById("authPhone")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("authPhonePassword")
+      .value;
+
+
+  if(!phone || !password){
+
+    showAuthMessage(
+      "Phone number اور password درج کریں۔"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth
+        .signInWithPassword({
+
+          phone,
+
+          password
+
+        });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    currentUser =
+      data.user || null;
+
+
+    closeAccount();
+
+    toast(
+      "Phone sign in successful."
+    );
+
+    await afterAuth();
+
+  }catch(error){
+
+    console.error(error);
+
+    showAuthMessage(
+      error.message ||
+      "Phone sign in failed."
+    );
+  }
+}
+
+
+/* ---------------------------------------------------------
+   PHONE OTP
+   --------------------------------------------------------- */
+
+async function sendPhoneOTP(){
+
+  if(!supabaseClient){
+    toast("Supabase connect نہیں ہے۔");
+    return;
+  }
+
+
+  const phone =
+    document
+      .getElementById("authPhone")
+      .value
+      .trim();
+
+
+  if(!phone){
+
+    showAuthMessage(
+      "پہلے phone number درج کریں۔"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient.auth
+        .signInWithOtp({
+
+          phone
+
+        });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    showAuthMessage(
+      "OTP آپ کے phone پر بھیج دیا گیا ہے۔",
+      "notice"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showAuthMessage(
+      error.message ||
+      "OTP send نہیں ہو سکا۔"
+    );
+  }
+}
+
+
+/* ---------------------------------------------------------
+   SIGN OUT
+   --------------------------------------------------------- */
+
+async function signOut(){
+
+  if(!supabaseClient){
+    return;
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient.auth.signOut();
+
+
+    if(error){
+      throw error;
+    }
+
+
+    currentUser = null;
+    currentProfile = null;
+    currentJobId = null;
+
+
+    updateAccountUI();
+
+    toast("Signed out.");
+
+    go("home");
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Sign out failed."
+    );
+  }
+}
+
+
+/* ---------------------------------------------------------
+   AUTH SESSION
+   --------------------------------------------------------- */
+
+async function restoreSession(){
+
+  if(!supabaseClient){
+    return;
+  }
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.getSession();
+
+
+    if(error){
+      throw error;
+    }
+
+
+    currentUser =
+      data.session
+        ? data.session.user
+        : null;
+
+
+    updateAccountUI();
+
+
+    if(currentUser){
+
+      await afterAuth();
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Session restore error:",
+      error
+    );
+  }
+}
+
+
+/* ---------------------------------------------------------
+   AUTH STATE CHANGES
+   --------------------------------------------------------- */
+
+function watchAuth(){
+
+  if(!supabaseClient){
+    return;
+  }
+
+
+  supabaseClient.auth
+    .onAuthStateChange(
+      async (event,session) => {
+
+        currentUser =
+          session
+            ? session.user
+            : null;
+
+
+        updateAccountUI();
+
+
+        if(
+          event === "SIGNED_IN" &&
+          currentUser
+        ){
+
+          setTimeout(
+            () => afterAuth(),
+            0
+          );
+        }
+
+
+        if(
+          event === "SIGNED_OUT"
+        ){
+
+          currentProfile = null;
+
+          clearDashboard();
+
+        }
+
+      }
+    );
+}
+
+
+/* ---------------------------------------------------------
+   AFTER LOGIN
+   --------------------------------------------------------- */
+
+async function afterAuth(){
+
+  if(!currentUser){
+    return;
+  }
+
+
+  await loadProfile();
+
+  await loadServices();
+
+  await loadDashboard();
+
+  await loadMyJobs();
+
+  updateAccountUI();
+
+}
+
+
+/* ---------------------------------------------------------
+   ACCOUNT UI
+   --------------------------------------------------------- */
+
+function updateAccountUI(){
+
+  const name =
+    document
+      .getElementById("accountName");
+
+
+  const button =
+    document
+      .getElementById("accountBtn");
+
+
+  if(!name || !button){
+    return;
+  }
+
+
+  if(currentUser){
+
+    name.textContent =
+      currentProfile?.full_name ||
+      currentUser.email ||
+      currentUser.phone ||
+      "Account";
+
+
+    button.textContent =
+      "Account";
+
+  }else{
+
+    name.textContent =
+      "Guest";
+
+    button.textContent =
+      "Account";
+  }
+}
+
+
+/* ---------------------------------------------------------
+   LOAD PROFILE
+   --------------------------------------------------------- */
+
+async function loadProfile(){
+
+  if(!currentUser || !supabaseClient){
+
+    currentProfile = null;
+
+    updateProfileUI();
+
+    return null;
+  }
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id,full_name,phone,role,avatar_url,created_at"
+        )
+        .eq(
+          "id",
+          currentUser.id
+        )
+        .maybeSingle();
+
+
+    if(error){
+      throw error;
+    }
+
+
+    currentProfile =
+      data || null;
+
+
+    updateProfileUI();
+
+    updateAccountUI();
+
+
+    return currentProfile;
+
+  }catch(error){
+
+    console.error(
+      "Profile loading error:",
+      error
+    );
+
+    return null;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   PROFILE UI
+   --------------------------------------------------------- */
+
+function updateProfileUI(){
+
+  const name =
+    document.getElementById(
+      "profileName"
+    );
+
+  const avatar =
+    document.getElementById(
+      "profileAvatar"
+    );
+
+  const phone =
+    document.getElementById(
+      "profilePhone"
+    );
+
+  const role =
+    document.getElementById(
+      "profileRole"
+    );
+
+  const roleValue =
+    document.getElementById(
+      "profileRoleValue"
+    );
+
+  const since =
+    document.getElementById(
+      "profileSince"
+    );
+
+
+  if(!currentUser){
+
+    if(name) name.textContent="Guest";
+    if(avatar) avatar.textContent="?";
+    if(phone) phone.textContent="—";
+    if(role) role.textContent="Not signed in";
+    if(roleValue) roleValue.textContent="—";
+    if(since) since.textContent="—";
+
+    return;
+  }
+
+
+  const fullName =
+    currentProfile?.full_name ||
+    currentUser.email ||
+    currentUser.phone ||
+    "User";
+
+
+  if(name){
+
+    name.textContent =
+      fullName;
+  }
+
+
+  if(avatar){
+
+    const avatarUrl =
+      currentProfile?.avatar_url;
+
+
+    if(avatarUrl){
+
+      avatar.innerHTML =
+        '<img src="' +
+        escapeHtml(avatarUrl) +
+        '" style="width:85px;height:85px;border-radius:50%;object-fit:cover">';
+
+    }else{
+
+      avatar.textContent =
+        fullName
+          .trim()
+          .charAt(0)
+          .toUpperCase() ||
+        "U";
+    }
+  }
+
+
+  if(phone){
+
+    phone.textContent =
+      currentProfile?.phone ||
+      currentUser.phone ||
+      currentUser.email ||
+      "—";
+  }
+
+
+  if(role){
+
+    role.textContent =
+      currentProfile?.role ||
+      "Customer";
+  }
+
+
+  if(roleValue){
+
+    roleValue.textContent =
+      currentProfile?.role ||
+      "customer";
+  }
+
+
+  if(since){
+
+    since.textContent =
+      currentProfile?.created_at
+        ? new Date(
+            currentProfile.created_at
+          ).getFullYear()
+        : "—";
+  }
+}
+
+
+/* ---------------------------------------------------------
+   CLEAR DASHBOARD
+   --------------------------------------------------------- */
+
+function clearDashboard(){
+
+  const recent =
+    document.getElementById(
+      "recentJobs"
+    );
+
+  const jobs =
+    document.getElementById(
+      "myJobs"
+    );
+
+
+  if(recent){
+
+    recent.innerHTML =
+      '<div class="empty">Sign in to load your real jobs.</div>';
+  }
+
+
+  if(jobs){
+
+    jobs.innerHTML =
+      '<div class="empty">Sign in to load your jobs.</div>';
+  }
+
+
+  [
+    "statActiveJobs",
+    "statOffers",
+    "statSaved",
+    "statCompleted"
+  ]
+  .forEach(id => {
+
+    const el =
+      document.getElementById(id);
+
+    if(el) el.textContent="0";
+
+  });
+}
+
+
+/* ---------------------------------------------------------
+   INIT
+   --------------------------------------------------------- */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async () => {
+
+    const connected =
+      initSupabase();
+
+
+    if(!connected){
+      return;
+    }
+
+
+    watchAuth();
+
+    await restoreSession();
+
+  }
+);
+
+</script>
+
+<!-- PART 4 CONTINUES HERE -->
+  <script>
+
+/* =========================================================
+   HOMEFIX — PART 4/5
+   REAL SERVICES + JOBS + OFFERS + LOCATION
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   SERVICES
+   --------------------------------------------------------- */
+
+async function loadServices(){
+
+  const grid =
+    document.getElementById("servicesGrid");
+
+  const select =
+    document.getElementById("svc");
+
+  if(!grid || !select || !supabaseClient){
+    return;
+  }
+
+  grid.innerHTML =
+    '<div class="empty">Loading services...</div>';
+
+  select.innerHTML =
+    '<option value="">Loading services...</option>';
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("services")
+        .select(
+          "id,created_at,name,description,category,icon,is_active"
+        )
+        .eq("is_active",true)
+        .order("name",{ascending:true});
+
+    if(error){
+      throw error;
+    }
+
+    const services =
+      data || [];
+
+    if(!services.length){
+
+      grid.innerHTML =
+        '<div class="empty">No active services found.</div>';
+
+      select.innerHTML =
+        '<option value="">No services available</option>';
+
+      return;
+    }
+
+    grid.innerHTML =
+      services.map(service => {
+
+        const icon =
+          service.icon || "🛠️";
+
+        return `
+          <div
+            class="card service"
+            onclick="prefillService(${Number(service.id)})">
+
+            <div class="ico">
+              ${escapeHtml(icon)}
+            </div>
+
+            <h3>
+              ${escapeHtml(service.name)}
+            </h3>
+
+            <p>
+              ${escapeHtml(
+                service.description || ""
+              )}
+            </p>
+
+          </div>
+        `;
+
+      }).join("");
+
+
+    select.innerHTML =
+      '<option value="">Select service</option>' +
+      services.map(service => {
+
+        return `
+          <option value="${Number(service.id)}">
+            ${escapeHtml(service.name)}
+          </option>
+        `;
+
+      }).join("");
+
+  }catch(error){
+
+    console.error(
+      "Services loading error:",
+      error
+    );
+
+    grid.innerHTML =
+      '<div class="error">Services load نہیں ہو سکیں: ' +
+      escapeHtml(error.message) +
+      '</div>';
+
+    select.innerHTML =
+      '<option value="">Unable to load services</option>';
+  }
+}
+
+
+/* ---------------------------------------------------------
+   SERVICE → POST JOB
+   --------------------------------------------------------- */
+
+function prefillService(serviceId){
+
+  go("post");
+
+  const select =
+    document.getElementById("svc");
+
+  if(select){
+
+    select.value =
+      String(serviceId);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   SCHEDULE
+   --------------------------------------------------------- */
+
+function getScheduleDate(){
+
+  const type =
+    document.getElementById(
+      "scheduleType"
+    )?.value || "asap";
+
+  const now =
+    new Date();
+
+
+  if(type === "asap"){
+    return null;
+  }
+
+
+  if(type === "today"){
+
+    now.setHours(
+      18,
+      0,
+      0,
+      0
+    );
+
+    return now.toISOString();
+  }
+
+
+  if(type === "tomorrow"){
+
+    now.setDate(
+      now.getDate() + 1
+    );
+
+    now.setHours(
+      12,
+      0,
+      0,
+      0
+    );
+
+    return now.toISOString();
+  }
+
+
+  if(type === "week"){
+
+    now.setDate(
+      now.getDate() + 3
+    );
+
+    now.setHours(
+      12,
+      0,
+      0,
+      0
+    );
+
+    return now.toISOString();
+  }
+
+
+  return null;
+}
+
+
+/* ---------------------------------------------------------
+   POST REAL JOB
+   --------------------------------------------------------- */
+
+async function postRealJob(){
+
+  if(!supabaseClient){
+
+    toast(
+      "Supabase connection موجود نہیں ہے۔"
+    );
+
+    return;
+  }
+
+
+  if(!currentUser){
+
+    openAccount();
+
+    showAuthMessage(
+      "Job post کرنے کے لیے پہلے sign in کریں۔"
+    );
+
+    return;
+  }
+
+
+  const serviceId =
+    document
+      .getElementById("svc")
+      .value;
+
+  const location =
+    document
+      .getElementById("loc")
+      .value
+      .trim();
+
+  const title =
+    document
+      .getElementById("jt")
+      .value
+      .trim();
+
+  const description =
+    document
+      .getElementById("desc")
+      .value
+      .trim();
+
+  const budgetValue =
+    document
+      .getElementById("budget")
+      .value
+      .trim();
+
+  const latitudeValue =
+    document
+      .getElementById("latitude")
+      .value
+      .trim();
+
+  const longitudeValue =
+    document
+      .getElementById("longitude")
+      .value
+      .trim();
+
+
+  if(!serviceId){
+
+    toast(
+      "Service select کریں۔"
+    );
+
+    return;
+  }
+
+
+  if(!location){
+
+    toast(
+      "Location / address لکھیں۔"
+    );
+
+    return;
+  }
+
+
+  if(!title){
+
+    toast(
+      "Job title لکھیں۔"
+    );
+
+    return;
+  }
+
+
+  if(!description){
+
+    toast(
+      "Job description لکھیں۔"
+    );
+
+    return;
+  }
+
+
+  const button =
+    document.getElementById(
+      "postJobBtn"
+    );
+
+
+  if(button){
+
+    button.disabled = true;
+
+    button.textContent =
+      "Posting...";
+  }
+
+
+  try{
+
+    const jobData = {
+
+      customer_id:
+        currentUser.id,
+
+      title,
+
+      description,
+
+      budget:
+        budgetValue
+          ? Number(budgetValue)
+          : null,
+
+      status:
+        "open",
+
+      location,
+
+      latitude:
+        latitudeValue
+          ? Number(latitudeValue)
+          : null,
+
+      longitude:
+        longitudeValue
+          ? Number(longitudeValue)
+          : null,
+
+      schedule:
+        getScheduleDate(),
+
+      contact_unlocked:
+        false,
+
+      contact_fee:
+        0,
+
+      payment_status:
+        "pending",
+
+      assigned_provider_id:
+        null,
+
+      accepted_at:
+        null,
+
+      completed_at:
+        null,
+
+      cancel_reason:
+        null,
+
+      service_id:
+        Number(serviceId)
+
+    };
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("jobs")
+        .insert(jobData)
+        .select("*")
+        .single();
+
+
+    if(error){
+      throw error;
+    }
+
+
+    currentJobId =
+      data.id;
+
+
+    toast(
+      "Job successfully posted."
+    );
+
+
+    clearJobForm();
+
+
+    await loadDashboard();
+
+    await loadMyJobs();
+
+
+    go("jobs");
+
+
+  }catch(error){
+
+    console.error(
+      "Post job error:",
+      error
+    );
+
+    toast(
+      error.message ||
+      "Job post نہیں ہو سکا۔"
+    );
+
+  }finally{
+
+    if(button){
+
+      button.disabled = false;
+
+      button.textContent =
+        "Post job & receive offers";
+    }
+  }
+}
+
+
+/* ---------------------------------------------------------
+   CLEAR JOB FORM
+   --------------------------------------------------------- */
+
+function clearJobForm(){
+
+  [
+    "loc",
+    "jt",
+    "desc",
+    "budget",
+    "latitude",
+    "longitude"
+  ]
+  .forEach(id => {
+
+    const element =
+      document.getElementById(id);
+
+    if(element){
+
+      element.value = "";
+    }
+
+  });
+
+
+  const service =
+    document.getElementById("svc");
+
+  if(service){
+
+    service.value = "";
+  }
+
+
+  const schedule =
+    document.getElementById(
+      "scheduleType"
+    );
+
+  if(schedule){
+
+    schedule.value =
+      "asap";
+  }
+}
+
+
+/* ---------------------------------------------------------
+   LOAD DASHBOARD
+   --------------------------------------------------------- */
+
+async function loadDashboard(){
+
+  if(!currentUser || !supabaseClient){
+
+    clearDashboard();
+
+    return;
+  }
+
+
+  try{
+
+    const {
+      data: jobs,
+      error
+    } =
+      await supabaseClient
+        .from("jobs")
+        .select(
+          "id,created_at,title,description,budget,status,location,schedule,service_id"
+        )
+        .eq(
+          "customer_id",
+          currentUser.id
+        )
+        .order(
+          "created_at",
+          {ascending:false}
+        )
+        .limit(10);
+
+
+    if(error){
+      throw error;
+    }
+
+
+    const list =
+      jobs || [];
+
+
+    const activeCount =
+      list.filter(job =>
+        ![
+          "completed",
+          "cancelled",
+          "canceled"
+        ].includes(
+          String(job.status || "")
+            .toLowerCase()
+        )
+      ).length;
+
+
+    const completedCount =
+      list.filter(job =>
+        String(job.status || "")
+          .toLowerCase()
+          === "completed"
+      ).length;
+
+
+    setText(
+      "statActiveJobs",
+      activeCount
+    );
+
+    setText(
+      "statCompleted",
+      completedCount
+    );
+
+
+    const recent =
+      document.getElementById(
+        "recentJobs"
+      );
+
+
+    if(recent){
+
+      if(!list.length){
+
+        recent.innerHTML =
+          '<div class="empty">No jobs yet. Post your first real job.</div>';
+
+      }else{
+
+        recent.innerHTML =
+          list.slice(0,5)
+            .map(renderRecentJob)
+            .join("");
+      }
+    }
+
+
+    await loadCustomerOfferCount();
+
+
+  }catch(error){
+
+    console.error(
+      "Dashboard error:",
+      error
+    );
+  }
+}
+
+
+/* ---------------------------------------------------------
+   RECENT JOB
+   --------------------------------------------------------- */
+
+function renderRecentJob(job){
+
+  const date =
+    job.created_at
+      ? new Date(
+          job.created_at
+        ).toLocaleDateString()
+      : "";
+
+
+  const status =
+    job.status ||
+    "open";
+
+
+  return `
+    <div
+      class="job card"
+      style="box-shadow:none">
+
+      <div class="jobleft">
+
+        <div class="jobicon">
+          🛠️
+        </div>
+
+        <div>
+
+          <h3>
+            ${escapeHtml(
+              job.title || "Untitled job"
+            )}
+          </h3>
+
+          <small>
+            ${escapeHtml(
+              job.location || "Location not provided"
+            )}
+            •
+            ${escapeHtml(date)}
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div>
+
+        ${
+          job.budget !== null &&
+          job.budget !== undefined
+          ? `<div class="price">
+              Rs. ${Number(job.budget).toLocaleString()}
+             </div>`
+          : ""
+        }
+
+        <span class="tag">
+          ${escapeHtml(status)}
+        </span>
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* ---------------------------------------------------------
+   CUSTOMER OFFERS COUNT
+   --------------------------------------------------------- */
+
+async function loadCustomerOfferCount(){
+
+  if(!currentUser || !supabaseClient){
+    return;
+  }
+
+
+  try{
+
+    const {
+      data: jobs,
+      error: jobsError
+    } =
+      await supabaseClient
+        .from("jobs")
+        .select("id")
+        .eq(
+          "customer_id",
+          currentUser.id
+        );
+
+
+    if(jobsError){
+      throw jobsError;
+    }
+
+
+    const ids =
+      (jobs || [])
+        .map(job => job.id);
+
+
+    if(!ids.length){
+
+      setText(
+        "statOffers",
+        0
+      );
+
+      setText(
+        "profileOfferCount",
+        0
+      );
+
+      return;
+    }
+
+
+    const {
+      count,
+      error
+    } =
+      await supabaseClient
+        .from("job_offers")
+        .select(
+          "id",
+          {
+            count:"exact",
+            head:true
+          }
+        )
+        .in(
+          "job_id",
+          ids
+        );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    setText(
+      "statOffers",
+      count || 0
+    );
+
+    setText(
+      "profileOfferCount",
+      count || 0
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Offer count error:",
+      error
+    );
+  }
+}
+
+
+/* ---------------------------------------------------------
+   MY JOBS
+   --------------------------------------------------------- */
+
+async function loadMyJobs(){
+
+  const container =
+    document.getElementById(
+      "myJobs"
+    );
+
+
+  if(!container){
+    return;
+  }
+
+
+  if(!currentUser || !supabaseClient){
+
+    container.innerHTML =
+      '<div class="empty">Sign in to load your jobs.</div>';
+
+    return;
+  }
+
+
+  container.innerHTML =
+    '<div class="empty">Loading your jobs...</div>';
+
+
+  try{
+
+    let query =
+      supabaseClient
+        .from("jobs")
+        .select(
+          "id,created_at,customer_id,title,description,budget,status,location,latitude,longitude,schedule,contact_unlocked,contact_fee,payment_status,assigned_provider_id,accepted_at,completed_at,cancel_reason,updated_at,service_id"
+        )
+        .eq(
+          "customer_id",
+          currentUser.id
+        )
+        .order(
+          "created_at",
+          {ascending:false}
+        );
+
+
+    if(
+      currentJobFilter === "active"
+    ){
+
+      query =
+        query
+          .not(
+            "status",
+            "in",
+            '("completed","cancelled","canceled")'
+          );
+    }
+
+
+    if(
+      currentJobFilter === "completed"
+    ){
+
+      query =
+        query.eq(
+          "status",
+          "completed"
+        );
+    }
+
+
+    const {
+      data,
+      error
+    } =
+      await query;
+
+
+    if(error){
+      throw error;
+    }
+
+
+    const jobs =
+      data || [];
+
+
+    if(!jobs.length){
+
+      container.innerHTML =
+        '<div class="empty">No jobs found.</div>';
+
+      return;
+    }
+
+
+    container.innerHTML =
+      jobs
+        .map(renderMyJob)
+        .join("");
+
+
+  }catch(error){
+
+    console.error(
+      "My jobs error:",
+      error
+    );
+
+    container.innerHTML =
+      '<div class="error">' +
+      escapeHtml(
+        error.message
+      ) +
+      '</div>';
+  }
+}
+
+
+/* ---------------------------------------------------------
+   RENDER MY JOB
+   --------------------------------------------------------- */
+
+function renderMyJob(job){
+
+  const status =
+    String(
+      job.status || "open"
+    );
+
+
+  return `
+    <div
+      class="card job"
+      style="box-shadow:none">
+
+      <div class="jobleft">
+
+        <div class="jobicon">
+          🛠️
+        </div>
+
+        <div>
+
+          <h3>
+            ${escapeHtml(
+              job.title
+            )}
+          </h3>
+
+          <small>
+            ${escapeHtml(
+              job.location || "—"
+            )}
+            •
+            ${job.created_at
+              ? escapeHtml(
+                  new Date(
+                    job.created_at
+                  ).toLocaleDateString()
+                )
+              : ""}
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div
+        style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+
+        ${
+          job.budget !== null &&
+          job.budget !== undefined
+          ? `<span class="price">
+               Rs. ${Number(job.budget).toLocaleString()}
+             </span>`
+          : ""
+        }
+
+
+        <span class="tag">
+          ${escapeHtml(status)}
+        </span>
+
+
+        <button
+          class="btn primary"
+          onclick="openJobOffers(${Number(job.id)})">
+
+          View
+
+        </button>
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* ---------------------------------------------------------
+   JOB FILTER
+   --------------------------------------------------------- */
+
+async function filterJobs(
+  filter,
+  button
+){
+
+  currentJobFilter =
+    filter;
+
+
+  document
+    .querySelectorAll(".tabs button")
+    .forEach(btn =>
+      btn.classList.remove("sel")
+    );
+
+
+  if(button){
+    button.classList.add("sel");
+  }
+
+
+  await loadMyJobs();
+}
+
+
+/* ---------------------------------------------------------
+   OPEN OFFERS FOR JOB
+   --------------------------------------------------------- */
+
+async function openJobOffers(
+  jobId
+){
+
+  currentJobId =
+    Number(jobId);
+
+
+  go("offers");
+
+  await loadOffers(
+    currentJobId
+  );
+}
+
+
+/* ---------------------------------------------------------
+   LOAD OFFERS
+   --------------------------------------------------------- */
+
+async function loadOffers(
+  jobId
+){
+
+  const container =
+    document.getElementById(
+      "offersContainer"
+    );
+
+
+  if(!container){
+    return;
+  }
+
+
+  if(!currentUser || !supabaseClient){
+
+    container.innerHTML =
+      '<div class="empty">Sign in to view offers.</div>';
+
+    return;
+  }
+
+
+  container.innerHTML =
+    '<div class="empty">Loading offers...</div>';
+
+
+  try{
+
+    const {
+      data: job,
+      error: jobError
+    } =
+      await supabaseClient
+        .from("jobs")
+        .select(
+          "id,title,budget,location,status,customer_id"
+        )
+        .eq(
+          "id",
+          jobId
+        )
+        .eq(
+          "customer_id",
+          currentUser.id
+        )
+        .single();
+
+
+    if(jobError){
+      throw jobError;
+    }
+
+
+    const {
+      data: offers,
+      error
+    } =
+      await supabaseClient
+        .from("job_offers")
+        .select(
+          "id,created_at,provider_id,offer_amount,message,status,accepted_at,job_id"
+        )
+        .eq(
+          "job_id",
+          jobId
+        )
+        .order(
+          "offer_amount",
+          {ascending:true}
+        );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    const offerList =
+      offers || [];
+
+
+    let profileMap = {};
+
+
+    const providerIds =
+      offerList
+        .map(
+          offer =>
+            offer.provider_id
+        )
+        .filter(Boolean);
+
+
+    if(providerIds.length){
+
+      const {
+        data: profiles,
+        error: profileError
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select(
+            "id,full_name,phone,role,avatar_url"
+          )
+          .in(
+            "id",
+            providerIds
+          );
+
+
+      if(profileError){
+        throw profileError;
+      }
+
+
+      (profiles || [])
+        .forEach(profile => {
+
+          profileMap[
+            profile.id
+          ] = profile;
+
+        });
+    }
+
+
+    let html = `
+
+      <div class="card">
+
+        <h3 style="margin-top:0">
+          ${escapeHtml(job.title)}
+        </h3>
+
+        <p class="muted">
+          ${escapeHtml(job.location || "—")}
+          •
+          Budget:
+          ${
+            job.budget !== null &&
+            job.budget !== undefined
+            ? "Rs. " +
+              Number(
+                job.budget
+              ).toLocaleString()
+            : "Not specified"
+          }
+        </p>
+
+      </div>
+
+    `;
+
+
+    if(!offerList.length){
+
+      html += `
+        <div class="card">
+          <div class="empty">
+            ابھی اس job پر کوئی offer نہیں آیا۔
+          </div>
+        </div>
+      `;
+
+      container.innerHTML =
+        html;
+
+      return;
+    }
+
+
+    html +=
+      '<div class="offers" style="margin-top:14px">';
+
+
+    offerList.forEach(
+      offer => {
+
+        const profile =
+          profileMap[
+            offer.provider_id
+          ] || {};
+
+
+        const name =
+          profile.full_name ||
+          "Professional";
+
+
+        const avatar =
+          profile.avatar_url;
+
+
+        const initials =
+          name
+            .split(" ")
+            .map(x => x.charAt(0))
+            .join("")
+            .slice(0,2)
+            .toUpperCase();
+
+
+        html += `
+
+          <div class="card offer">
+
+            <div class="person">
+
+              <div class="avatar">
+
+                ${
+                  avatar
+                  ? `<img
+                       src="${escapeHtml(avatar)}"
+                       style="width:44px;height:44px;border-radius:50%;object-fit:cover">`
+                  : escapeHtml(initials)
+                }
+
+              </div>
+
+              <div>
+
+                <b>
+                  ${escapeHtml(name)}
+                </b>
+
+                <div class="rating">
+                  ${escapeHtml(
+                    profile.role ||
+                    "Professional"
+                  )}
+                </div>
+
+                ${
+                  offer.message
+                  ? `<div
+                       class="muted"
+                       style="margin-top:5px">
+                       ${escapeHtml(
+                         offer.message
+                       )}
+                     </div>`
+                  : ""
+                }
+
+              </div>
+
+            </div>
+
+
+            <div
+              style="text-align:right">
+
+              <b>
+                Rs.
+                ${Number(
+                                   offer.offer_amount || 0
+                ).toLocaleString()}
+              </b>
+
+              <br>
+
+              <span class="tag">
+                ${escapeHtml(
+                  offer.status || "pending"
+                )}
+              </span>
+
+              ${
+                String(
+                  offer.status || ""
+                ).toLowerCase() !== "accepted"
+                &&
+                String(
+                  job.status || ""
+                ).toLowerCase() !== "completed"
+                ? `
+                  <br>
+
+                  <button
+                    class="btn primary"
+                    style="margin-top:7px"
+                    onclick="acceptOffer(
+                      ${Number(offer.id)},
+                      ${Number(job.id)},
+                      '${escapeJs(name)}',
+                      '${escapeJs(String(offer.provider_id))}'
+                    )">
+
+                    Select
+
+                  </button>
+                `
+                : ""
+              }
+
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    );
+
+
+    html +=
+      "</div>";
+
+
+    container.innerHTML =
+      html;
+
+
+  }catch(error){
+
+    console.error(
+      "Offers loading error:",
+      error
+    );
+
+    container.innerHTML =
+      '<div class="error">' +
+      escapeHtml(
+        error.message
+      ) +
+      '</div>';
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   ACCEPT REAL OFFER
+   --------------------------------------------------------- */
+
+async function acceptOffer(
+  offerId,
+  jobId,
+  providerName,
+  providerId
+){
+
+  if(!currentUser){
+
+    toast(
+      "Please sign in first."
+    );
+
+    return;
+  }
+
+
+  const confirmed =
+    confirm(
+      providerName +
+      " کو اس job کے لیے select کرنا ہے؟"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    const now =
+      new Date().toISOString();
+
+
+    /* Accept selected offer */
+
+    const {
+      data: acceptedOffer,
+      error: offerError
+    } =
+      await supabaseClient
+        .from("job_offers")
+        .update({
+          status:"accepted",
+          accepted_at:now
+        })
+        .eq(
+          "id",
+          offerId
+        )
+        .select(
+          "id,provider_id"
+        )
+        .single();
+
+
+    if(offerError){
+      throw offerError;
+    }
+
+
+    /* Assign professional to job */
+
+    const {
+      error: jobError
+    } =
+      await supabaseClient
+        .from("jobs")
+        .update({
+
+          status:"assigned",
+
+          assigned_provider_id:
+            acceptedOffer.provider_id,
+
+          accepted_at:
+            now,
+
+          updated_at:
+            now
+
+        })
+        .eq(
+          "id",
+          jobId
+        )
+        .eq(
+          "customer_id",
+          currentUser.id
+        );
+
+
+    if(jobError){
+      throw jobError;
+    }
+
+
+    toast(
+      providerName +
+      " selected successfully."
+    );
+
+
+    await loadOffers(
+      jobId
+    );
+
+    await loadMyJobs();
+
+    await loadDashboard();
+
+
+  }catch(error){
+
+    console.error(
+      "Accept offer error:",
+      error
+    );
+
+    toast(
+      error.message ||
+      "Offer accept نہیں ہو سکا۔"
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   CURRENT LOCATION
+   --------------------------------------------------------- */
+
+function getCurrentLocation(){
+
+  if(!navigator.geolocation){
+
+    toast(
+      "Location browser میں available نہیں ہے۔"
+    );
+
+    return;
+  }
+
+
+  toast(
+    "Location permission مانگی جا رہی ہے..."
+  );
+
+
+  navigator.geolocation.getCurrentPosition(
+
+    function(position){
+
+      const lat =
+        position.coords.latitude;
+
+      const lng =
+        position.coords.longitude;
+
+
+      setValue(
+        "latitude",
+        lat.toFixed(7)
+      );
+
+
+      setValue(
+        "longitude",
+        lng.toFixed(7)
+      );
+
+
+      toast(
+        "Current location added."
+      );
+
+    },
+
+    function(error){
+
+      console.error(
+        "Location error:",
+        error
+      );
+
+
+      toast(
+        "Location نہیں مل سکی۔ Permission allow کریں۔"
+      );
+
+    },
+
+    {
+      enableHighAccuracy:true,
+      timeout:10000,
+      maximumAge:30000
+    }
+/* ---------------------------------------------------------
+   LOAD MY JOBS
+   --------------------------------------------------------- */
+
+async function loadMyJobs(){
+
+  const container =
+    document.getElementById("myJobs");
+
+  if(!container){
+    return;
+  }
+
+  if(!currentUser || !supabaseClient){
+
+    container.innerHTML =
+      '<div class="empty">Sign in to load your jobs.</div>';
+
+    return;
+  }
+
+  container.innerHTML =
+    '<div class="empty">Loading your jobs...</div>';
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("jobs")
+        .select(`
+          id,
+          created_at,
+          customer_id,
+          title,
+          description,
+          budget,
+          status,
+          location,
+          latitude,
+          longitude,
+          schedule,
+          contact_unlocked,
+          contact_fee,
+          payment_status,
+          assigned_provider_id,
+          accepted_at,
+          completed_at,
+          cancel_reason,
+          updated_at,
+          service_id
+        `)
+        .eq(
+          "customer_id",
+          currentUser.id
+        )
+        .order(
+          "created_at",
+          {ascending:false}
+        );
+
+    if(error){
+      throw error;
+    }
+
+    const jobs =
+      data || [];
+
+    if(!jobs.length){
+
+      container.innerHTML =
+        '<div class="empty">No jobs found. Post your first job.</div>';
+
+      return;
+    }
+
+    container.innerHTML =
+      jobs
+        .map(renderMyJob)
+        .join("");
+
+  }catch(error){
+
+    console.error(
+      "My jobs error:",
+      error
+    );
+
+    container.innerHTML =
+      '<div class="error">' +
+      escapeHtml(error.message) +
+      '</div>';
+  }
+}
+
+
+/* ---------------------------------------------------------
+   RENDER MY JOB
+   --------------------------------------------------------- */
+
+function renderMyJob(job){
+
+  const status =
+    String(
+      job.status || "open"
+    );
+
+  const budget =
+    job.budget !== null &&
+    job.budget !== undefined
+      ? "Rs. " +
+        Number(
+          job.budget
+        ).toLocaleString()
+      : "Budget not specified";
+
+  const date =
+    job.created_at
+      ? new Date(
+          job.created_at
+        ).toLocaleDateString()
+      : "";
+
+  return `
+    <div
+      class="card job"
+      style="box-shadow:none">
+
+      <div class="jobleft">
+
+        <div class="jobicon">
+          🛠️
+        </div>
+
+        <div>
+
+          <h3>
+            ${escapeHtml(
+              job.title || "Untitled job"
+            )}
+          </h3>
+
+          <small>
+            ${escapeHtml(
+              job.location || "Location not provided"
+            )}
+            •
+            ${escapeHtml(date)}
+          </small>
+
+        </div>
+
+      </div>
+
+      <div
+        style="
+          display:flex;
+          gap:8px;
+          align-items:center;
+          flex-wrap:wrap;
+        ">
+
+        <span class="price">
+          ${escapeHtml(budget)}
+        </span>
+
+        <span class="tag">
+          ${escapeHtml(status)}
+        </span>
+
+        <button
+          class="btn primary"
+          onclick="openJobOffers(${Number(job.id)})">
+
+          View
+
+        </button>
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* ---------------------------------------------------------
+   OPEN OFFERS FOR JOB
+   --------------------------------------------------------- */
+
+async function openJobOffers(jobId){
+
+  currentJobId =
+    Number(jobId);
+
+  go("offers");
+
+  await loadOffers(
+    currentJobId
+  );
+}
+
+
+/* ---------------------------------------------------------
+   LOAD CUSTOMER OFFER COUNT
+   --------------------------------------------------------- */
+
+async function loadCustomerOfferCount(){
+
+  if(!currentUser || !supabaseClient){
+    return;
+  }
+
+  try{
+
+    const {
+      data: jobs,
+      error: jobsError
+    } =
+      await supabaseClient
+        .from("jobs")
+        .select("id")
+        .eq(
+          "customer_id",
+          currentUser.id
+        );
+
+    if(jobsError){
+      throw jobsError;
+    }
+
+    const ids =
+      (jobs || [])
+        .map(job => job.id);
+
+    if(!ids.length){
+
+      setText(
+        "statOffers",
+        0
+      );
+
+      return;
+    }
+
+    const {
+      count,
+      error
+    } =
+      await supabaseClient
+        .from("job_offers")
+        .select(
+          "id",
+          {
+            count:"exact",
+            head:true
+          }
+        )
+        .in(
+          "job_id",
+          ids
+        );
+
+    if(error){
+      throw error;
+    }
+
+    setText(
+      "statOffers",
+      count || 0
+    );
+
+  }catch(error){
+
+    console.error(
+      "Offer count error:",
+      error
+    );
+  }
+}
+
+
+/* ---------------------------------------------------------
+   JOB FILTER
+   --------------------------------------------------------- */
+
+async function filterJobs(
+  filter,
+  button
+){
+
+  currentJobFilter =
+    filter;
+
+  document
+    .querySelectorAll(".tabs button")
+    .forEach(btn =>
+      btn.classList.remove("sel")
+    );
+
+  if(button){
+    button.classList.add("sel");
+  }
+
+  await loadMyJobs();
+}
+
+
+/* ---------------------------------------------------------
+   PART 4-C END
+   /* ---------------------------------------------------------
+   PROFESSIONAL JOBS
+   --------------------------------------------------------- */
+
+async function loadProfessionalJobs(){
+
+  const container =
+    document.getElementById("professionalJobs");
+
+  if(!container){
+    return;
+  }
+
+  if(!currentUser){
+
+    container.innerHTML =
+      '<div class="empty">Sign in first.</div>';
+
+    return;
+  }
+
+  container.innerHTML =
+    '<div class="empty">Loading nearby jobs...</div>';
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("jobs")
+        .select(`
+          id,
+          created_at,
+          service_id,
+          title,
+          description,
+          budget,
+          status,
+          location,
+          latitude,
+          longitude,
+          schedule
+        `)
+        .in(
+          "status",
+          [
+            "open",
+            "posted",
+            "pending"
+          ]
+        )
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        )
+        .limit(30);
+
+    if(error){
+      throw error;
+    }
+
+    const jobs =
+      data || [];
+
+    if(!jobs.length){
+
+      container.innerHTML =
+        '<div class="empty">No open jobs available right now.</div>';
+
+      return;
+    }
+
+    container.innerHTML =
+      jobs
+        .map(
+          renderProfessionalJob
+        )
+        .join("");
+
+  }catch(error){
+
+    console.error(
+      "Professional jobs error:",
+      error
+    );
+
+    container.innerHTML =
+      '<div class="error">' +
+      escapeHtml(
+        error.message
+      ) +
+      '</div>';
+  }
+}
+
+
+/* ---------------------------------------------------------
+   RENDER PROFESSIONAL JOB
+   --------------------------------------------------------- */
+
+function renderProfessionalJob(job){
+
+  const budget =
+    job.budget !== null &&
+    job.budget !== undefined
+      ? "Rs. " +
+        Number(
+          job.budget
+        ).toLocaleString()
+      : "Budget not specified";
+
+  return `
+    <div class="job">
+
+      <div class="jobleft">
+
+        <div class="jobicon">
+          🛠️
+        </div>
+
+        <div>
+
+          <h3>
+            ${escapeHtml(
+              job.title ||
+              "Service request"
+            )}
+          </h3>
+
+          <small>
+            ${escapeHtml(
+              job.location ||
+              "Location not provided"
+            )}
+          </small>
+
+        </div>
+
+      </div>
+
+      <div>
+
+        <div class="price">
+          ${escapeHtml(budget)}
+        </div>
+
+        <button
+          class="btn primary"
+          style="margin-top:7px"
+          onclick="openOfferForm(${Number(job.id)})">
+
+          Send offer
+
+        </button>
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* ---------------------------------------------------------
+   OFFER FORM
+   --------------------------------------------------------- */
+
+function openOfferForm(jobId){
+
+  if(!currentUser){
+
+    toast(
+      "Please sign in first."
+    );
+
+    return;
+  }
+
+  currentOfferJobId =
+    Number(jobId);
+
+  const modal =
+    document.getElementById("modal");
+
+  const title =
+    document.getElementById("mt");
+
+  const body =
+    document.getElementById("mb");
+
+  if(!modal || !title || !body){
+    return;
+  }
+
+  title.textContent =
+    "Send your offer";
+
+  body.innerHTML = `
+
+    <div class="form">
+
+      <div class="field">
+
+        <label>
+          OFFER AMOUNT
+        </label>
+
+        <input
+          id="offerAmount"
+          type="number"
+          min="1"
+          placeholder="Rs."
+        >
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          MESSAGE
+        </label>
+
+        <textarea
+          id="offerMessage"
+          rows="4"
+          placeholder="Explain your work, timing and offer..."
+        ></textarea>
+
+      </div>
+
+      <button
+        class="btn primary"
+        onclick="submitOffer()">
+
+        Send Offer
+
+      </button>
+
+    </div>
+  `;
+
+  modal.classList.add(
+    "open"
+  );
+}
+
+
+/* ---------------------------------------------------------
+   SUBMIT REAL OFFER
+   --------------------------------------------------------- */
+
+async function submitOffer(){
+
+  if(!currentUser){
+
+    toast(
+      "Please sign in first."
+    );
+
+    return;
+  }
+
+  if(!currentOfferJobId){
+
+    toast(
+      "Job not selected."
+    );
+
+    return;
+  }
+
+  const amountInput =
+    document.getElementById(
+      "offerAmount"
+    );
+
+  const messageInput =
+    document.getElementById(
+      "offerMessage"
+    );
+
+  const amount =
+    Number(
+      amountInput?.value
+    );
+
+  const message =
+    messageInput?.value.trim() ||
+    "";
+
+  if(!amount || amount <= 0){
+
+    toast(
+      "Enter a valid offer amount."
+    );
+
+    return;
+  }
+
+  try{
+
+    const {
+      data: existing,
+      error: existingError
+    } =
+      await supabaseClient
+        .from("job_offers")
+        .select("id")
+        .eq(
+          "job_id",
+          currentOfferJobId
+        )
+        .eq(
+          "provider_id",
+          currentUser.id
+        )
+        .maybeSingle();
+
+    if(existingError){
+      throw existingError;
+    }
+
+    let result;
+
+    if(existing){
+
+      result =
+        await supabaseClient
+          .from("job_offers")
+          .update({
+            offer_amount:amount,
+            message:message,
+            status:"pending"
+          })
+          .eq(
+            "id",
+            existing.id
+          );
+
+    }else{
+
+      result =
+        await supabaseClient
+          .from("job_offers")
+          .insert({
+            job_id:
+              currentOfferJobId,
+
+            provider_id:
+              currentUser.id,
+
+            offer_amount:
+              amount,
+
+            message:
+              message,
+
+            status:
+              "pending"
+          });
+
+    }
+
+    if(result.error){
+      throw result.error;
+    }
+
+    closeModal();
+
+    toast(
+      "Offer sent successfully."
+    );
+
+    await loadProfessionalJobs();
+
+  }catch(error){
+
+    console.error(
+      "Send offer error:",
+      error
+    );
+
+    toast(
+      error.message ||
+      "Offer send نہیں ہو سکی۔"
+    );
+  }
+}
+
+
+/* ---------------------------------------------------------
+   CLOSE MODAL ON BACKDROP
+   --------------------------------------------------------- */
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    const modal =
+      document.getElementById(
+        "modal"
+      );
+
+    if(
+      modal &&
+      event.target === modal
+    ){
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+/* ---------------------------------------------------------
+   PART 4-D END
+   --------------------------------------------------------- */
+   --------------------------------------------------------- */
+  );
+
+}
+
+
+/* ---------------------------------------------------------
+   END OF THIS PART
+   /* ---------------------------------------------------------
+   PART 4-E — REAL CHAT
+   --------------------------------------------------------- */
+
+async function loadChat(jobId){
+
+  const messagesBox =
+    document.getElementById("messages");
+
+  if(!messagesBox){
+    return;
+  }
+
+  if(!currentUser){
+
+    messagesBox.innerHTML =
+      '<div class="empty">Sign in first.</div>';
+
+    return;
+  }
+
+  currentChatJobId =
+    Number(jobId || currentChatJobId || 0);
+
+  if(!currentChatJobId){
+
+    messagesBox.innerHTML =
+      '<div class="empty">Select a job first.</div>';
+
+    return;
+  }
+
+  messagesBox.innerHTML =
+    '<div class="empty">Loading messages...</div>';
+
+  /*
+    اگر آپ کے Supabase project میں ابھی messages
+    table نہیں بنی تو یہ حصہ بعد میں connect کریں گے۔
+  */
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("messages")
+        .select("*")
+        .eq(
+          "job_id",
+          currentChatJobId
+        )
+        .order(
+          "created_at",
+          {
+            ascending:true
+          }
+        );
+
+    if(error){
+      throw error;
+    }
+
+    const messages =
+      data || [];
+
+    if(!messages.length){
+
+      messagesBox.innerHTML =
+        '<div class="empty">No messages yet.</div>';
+
+      return;
+    }
+
+    messagesBox.innerHTML =
+      messages
+        .map(
+          renderMessage
+        )
+        .join("");
+
+    messagesBox.scrollTop =
+      messagesBox.scrollHeight;
+
+  }catch(error){
+
+    console.error(
+      "Chat loading error:",
+      error
+    );
+
+    messagesBox.innerHTML =
+      '<div class="empty">' +
+      escapeHtml(
+        error.message
+      ) +
+      '</div>';
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   RENDER MESSAGE
+   --------------------------------------------------------- */
+
+function renderMessage(message){
+
+  const senderId =
+    String(
+      message.sender_id ||
+      message.user_id ||
+      ""
+    );
+
+  const mine =
+    senderId ===
+    String(
+      currentUser?.id || ""
+    );
+
+  return `
+    <div
+      class="msg ${mine ? "mine" : "theirs"}">
+
+      ${escapeHtml(
+        message.message ||
+        message.body ||
+        message.content ||
+        ""
+      )}
+
+    </div>
+  `;
+}
+
+
+/* ---------------------------------------------------------
+   SEND REAL CHAT MESSAGE
+   --------------------------------------------------------- */
+
+async function sendChat(){
+
+  if(!currentUser){
+
+    toast(
+      "Please sign in first."
+    );
+
+    return;
+  }
+
+  const input =
+    document.getElementById(
+      "chatinput"
+    );
+
+  if(!input){
+    return;
+  }
+
+  const text =
+    input.value.trim();
+
+  if(!text){
+    return;
+  }
+
+  if(!currentChatJobId){
+
+    toast(
+      "Open a job before sending a message."
+    );
+
+    return;
+  }
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("messages")
+        .insert({
+
+          job_id:
+            currentChatJobId,
+
+          sender_id:
+            currentUser.id,
+
+          message:
+            text
+
+        });
+
+    if(error){
+      throw error;
+    }
+
+    input.value = "";
+
+    await loadChat(
+      currentChatJobId
+    );
+
+  }catch(error){
+
+    console.error(
+      "Send message error:",
+      error
+    );
+
+    toast(
+      error.message ||
+      "Message send نہیں ہو سکا۔"
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   REAL PROFILE
+   --------------------------------------------------------- */
+
+async function loadProfile(){
+
+  if(!currentUser){
+    return;
+  }
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(`
+          id,
+          full_name,
+          phone,
+          role,
+          avatar_url,
+          created_at
+        `)
+        .eq(
+          "id",
+          currentUser.id
+        )
+        .maybeSingle();
+
+    if(error){
+      throw error;
+    }
+
+    if(!data){
+      return;
+    }
+
+    setText(
+      "profileName",
+      data.full_name ||
+      "User"
+    );
+
+    setText(
+      "profilePhone",
+      data.phone ||
+      "Phone not added"
+    );
+
+    setText(
+      "profileRole",
+      data.role ||
+      "Customer"
+    );
+
+    const avatar =
+      document.getElementById(
+        "profileAvatar"
+      );
+
+    if(
+      avatar &&
+      data.avatar_url
+    ){
+
+      avatar.src =
+        data.avatar_url;
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Profile loading error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   SIGN OUT
+   --------------------------------------------------------- */
+
+async function signOutUser(){
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .auth
+        .signOut();
+
+    if(error){
+      throw error;
+    }
+
+    currentUser =
+      null;
+
+    toast(
+      "Signed out successfully."
+    );
+
+    setTimeout(
+      () => location.reload(),
+      500
+    );
+
+  }catch(error){
+
+    console.error(
+      "Sign out error:",
+      error
+    );
+
+    toast(
+      error.message ||
+      "Sign out failed."
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   PART 4-E END
+   /* ---------------------------------------------------------
+   PART 4-F — REAL DASHBOARD + SERVICES
+   --------------------------------------------------------- */
+
+async function loadDashboard(){
+
+  if(!currentUser){
+    return;
+  }
+
+  try{
+
+    const {
+      data:jobs,
+      error
+    } =
+      await supabaseClient
+        .from("jobs")
+        .select(
+          "id,status,created_at,budget"
+        )
+        .eq(
+          "customer_id",
+          currentUser.id
+        )
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        );
+
+    if(error){
+      throw error;
+    }
+
+    const list =
+      jobs || [];
+
+    const active =
+      list.filter(job =>
+        [
+          "assigned",
+          "accepted",
+          "in_progress",
+          "on_the_way"
+        ].includes(
+          String(job.status)
+            .toLowerCase()
+        )
+      ).length;
+
+    const completed =
+      list.filter(job =>
+        String(job.status)
+          .toLowerCase() ===
+        "completed"
+      ).length;
+
+    setText(
+      "statActiveJobs",
+      active
+    );
+
+    setText(
+      "statCompleted",
+      completed
+    );
+
+    await loadCustomerOfferCount();
+
+    renderRecentJobs(
+      list.slice(0,5)
+    );
+
+  }catch(error){
+
+    console.error(
+      "Dashboard error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   RECENT JOBS
+   --------------------------------------------------------- */
+
+function renderRecentJobs(jobs){
+
+  const container =
+    document.getElementById(
+      "recentJobs"
+    );
+
+  if(!container){
+    return;
+  }
+
+  if(!jobs.length){
+
+    container.innerHTML =
+      '<div class="empty">No jobs posted yet.</div>';
+
+    return;
+  }
+
+  container.innerHTML =
+    jobs
+      .map(job => {
+
+        const budget =
+          job.budget !== null &&
+          job.budget !== undefined
+            ? "Rs. " +
+              Number(
+                job.budget
+              ).toLocaleString()
+            : "No budget";
+
+        return `
+          <div class="job">
+
+            <div class="jobleft">
+
+              <div class="jobicon">
+                🛠️
+              </div>
+
+              <div>
+
+                <h3>
+                  Job #${Number(job.id)}
+                </h3>
+
+                <small>
+                  ${escapeHtml(
+                    job.status ||
+                    "open"
+                  )}
+                </small>
+
+              </div>
+
+            </div>
+
+            <div>
+
+              <div class="price">
+                ${escapeHtml(budget)}
+              </div>
+
+              <button
+                class="btn outline"
+                onclick="openJobOffers(${Number(job.id)})">
+
+                View
+
+              </button>
+
+            </div>
+
+          </div>
+        `;
+
+      })
+      .join("");
+
+}
+
+
+/* ---------------------------------------------------------
+   LOAD SERVICES FROM SUPABASE
+   --------------------------------------------------------- */
+
+async function loadServices(){
+
+  const container =
+    document.getElementById(
+      "serviceGrid"
+    );
+
+  if(!container){
+    return;
+  }
+
+  container.innerHTML =
+    '<div class="empty">Loading services...</div>';
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("services")
+        .select(`
+          id,
+          created_at,
+          name,
+          description,
+          category,
+          icon,
+          is_active
+        `)
+        .eq(
+          "is_active",
+          true
+        )
+        .order(
+          "id",
+          {
+            ascending:true
+          }
+        );
+
+    if(error){
+      throw error;
+    }
+
+    const services =
+      data || [];
+
+    if(!services.length){
+
+      container.innerHTML =
+        '<div class="empty">No active services found.</div>';
+
+      return;
+    }
+
+    container.innerHTML =
+      services
+        .map(service => `
+
+          <div
+            class="card service"
+            onclick="prefillRealService(
+              ${Number(service.id)},
+              '${escapeJs(service.name)}'
+            )">
+
+            <div class="ico">
+              ${escapeHtml(
+                service.icon ||
+                "🛠️"
+              )}
+            </div>
+
+            <h3>
+              ${escapeHtml(
+                service.name
+              )}
+            </h3>
+
+            <p>
+              ${escapeHtml(
+                service.description ||
+                ""
+              )}
+            </p>
+
+          </div>
+
+        `)
+        .join("");
+
+  }catch(error){
+
+    console.error(
+      "Services loading error:",
+      error
+    );
+
+    container.innerHTML =
+      '<div class="error">' +
+      escapeHtml(
+        error.message
+      ) +
+      '</div>';
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   SELECT REAL SERVICE
+   --------------------------------------------------------- */
+
+function prefillRealService(
+  serviceId,
+  serviceName
+){
+
+  currentServiceId =
+    Number(serviceId);
+
+  const serviceInput =
+    document.getElementById(
+      "svc"
+    );
+
+  if(serviceInput){
+
+    /*
+      svc اگر select ہے تو اس میں موجود
+      option کو select کرنے کی کوشش کریں۔
+    */
+
+    const options =
+      Array.from(
+        serviceInput.options
+      );
+
+    const option =
+      options.find(
+        item =>
+          item.textContent.trim()
+            .toLowerCase() ===
+          String(serviceName)
+            .trim()
+            .toLowerCase()
+      );
+
+    if(option){
+
+      serviceInput.value =
+        option.value;
+
+    }
+
+  }
+
+  go("post");
+
+}
+
+
+/* ---------------------------------------------------------
+   LOAD SERVICES INTO JOB FORM
+   --------------------------------------------------------- */
+
+async function loadServiceOptions(){
+
+  const select =
+    document.getElementById(
+      "svc"
+    );
+
+  if(!select){
+    return;
+  }
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("services")
+        .select(
+          "id,name,is_active"
+        )
+        .eq(
+          "is_active",
+          true
+        )
+        .order(
+          "id",
+          {
+            ascending:true
+          }
+        );
+
+    if(error){
+      throw error;
+    }
+
+    const services =
+      data || [];
+
+    if(!services.length){
+      return;
+    }
+
+    select.innerHTML =
+      services
+        .map(service => `
+
+          <option
+            value="${Number(service.id)}">
+
+            ${escapeHtml(
+              service.name
+            )}
+
+          </option>
+
+        `)
+        .join("");
+
+  }catch(error){
+
+    console.error(
+      "Service options error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   PART 4-F END
+   /* ---------------------------------------------------------
+   PART 4-G — REAL JOB POSTING
+   --------------------------------------------------------- */
+
+async function postRealJob(){
+
+  if(!currentUser){
+
+    toast(
+      "Please sign in first."
+    );
+
+    return;
+  }
+
+  const service =
+    document.getElementById("svc");
+
+  const title =
+    document.getElementById("jt");
+
+  const location =
+    document.getElementById("loc");
+
+  const description =
+    document.getElementById("desc");
+
+  const budget =
+    document.getElementById("budget");
+
+  if(!service || !title || !location || !description){
+    toast("Job form not found.");
+    return;
+  }
+
+  const titleValue =
+    title.value.trim();
+
+  const locationValue =
+    location.value.trim();
+
+  const descriptionValue =
+    description.value.trim();
+
+  if(!titleValue){
+
+    toast(
+      "Please enter job title."
+    );
+
+    return;
+  }
+
+  if(!locationValue){
+
+    toast(
+      "Please enter location."
+    );
+
+    return;
+  }
+
+  if(!descriptionValue){
+
+    toast(
+      "Please describe the job."
+    );
+
+    return;
+  }
+
+  const serviceId =
+    Number(
+      service.value
+    );
+
+  if(!serviceId){
+
+    toast(
+      "Please select a service."
+    );
+
+    return;
+  }
+
+  const budgetValue =
+    budget &&
+    budget.value !== ""
+      ? Number(
+          budget.value
+        )
+      : null;
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("jobs")
+        .insert({
+
+          customer_id:
+            currentUser.id,
+
+          service_id:
+            serviceId,
+
+          title:
+            titleValue,
+
+          description:
+            descriptionValue,
+
+          budget:
+            budgetValue,
+
+          status:
+            "open",
+
+          location:
+            locationValue,
+
+          contact_unlocked:
+            false,
+
+          payment_status:
+            "pending"
+
+        })
+        .select()
+        .single();
+
+    if(error){
+      throw error;
+    }
+
+    currentJobId =
+      data.id;
+
+    toast(
+      "Job posted successfully."
+    );
+
+    /*
+      Form clear
+    */
+
+    title.value = "";
+    location.value = "";
+    description.value = "";
+
+    if(budget){
+      budget.value = "";
+    }
+
+    await loadMyJobs();
+
+    await loadDashboard();
+
+    setTimeout(
+      () => {
+
+        go("jobs");
+
+      },
+      500
+    );
+
+  }catch(error){
+
+    console.error(
+      "Post job error:",
+      error
+    );
+
+    toast(
+      error.message ||
+      "Job post نہیں ہو سکی۔"
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   REPLACE OLD DEMO POST FUNCTION
+   --------------------------------------------------------- */
+
+function postDemo(){
+
+  /*
+    پرانا demo ختم:
+    اب یہی function REAL Supabase job
+    create کرے گا۔
+  */
+
+  postRealJob();
+
+}
+
+
+/* ---------------------------------------------------------
+   UPDATE JOB STATUS
+   --------------------------------------------------------- */
+
+async function updateJobStatus(
+  jobId,
+  status
+){
+
+  if(!currentUser){
+    toast("Please sign in first.");
+    return;
+  }
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("jobs")
+        .update({
+
+          status:
+            status,
+
+          updated_at:
+            new Date().toISOString()
+
+        })
+        .eq(
+          "id",
+          Number(jobId)
+        )
+        .eq(
+          "customer_id",
+          currentUser.id
+        );
+
+    if(error){
+      throw error;
+    }
+
+    toast(
+      "Job status updated."
+    );
+
+    await loadMyJobs();
+
+    await loadDashboard();
+
+  }catch(error){
+
+    console.error(
+      "Update job status error:",
+      error
+    );
+
+    toast(
+      error.message ||
+      "Status update failed."
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   CANCEL JOB
+   --------------------------------------------------------- */
+
+async function cancelJob(
+  jobId
+){
+
+  if(!currentUser){
+    toast("Please sign in first.");
+    return;
+  }
+
+  const reason =
+    prompt(
+      "Cancel reason:"
+    );
+
+  if(reason === null){
+    return;
+  }
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("jobs")
+        .update({
+
+          status:
+            "cancelled",
+
+          cancel_reason:
+            reason.trim(),
+
+          updated_at:
+            new Date().toISOString()
+
+        })
+        .eq(
+          "id",
+          Number(jobId)
+        )
+        .eq(
+          "customer_id",
+          currentUser.id
+        );
+
+    if(error){
+      throw error;
+    }
+
+    toast(
+      "Job cancelled."
+    );
+
+    await loadMyJobs();
+
+    await loadDashboard();
+
+  }catch(error){
+
+    console.error(
+      "Cancel job error:",
+      error
+    );
+
+    toast(
+      error.message ||
+      "Job cancel نہیں ہو سکی۔"
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   PART 4-G END
+   /* ---------------------------------------------------------
+   PART 4-H — REAL AUTH STATE + ACCOUNT
+   --------------------------------------------------------- */
+
+async function loadAccount(){
+
+  if(!currentUser){
+    return;
+  }
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(`
+          id,
+          full_name,
+          phone,
+          role,
+          avatar_url,
+          created_at
+        `)
+        .eq(
+          "id",
+          currentUser.id
+        )
+        .maybeSingle();
+
+    if(error){
+      throw error;
+    }
+
+    if(data){
+
+      setText(
+        "accountName",
+        data.full_name ||
+        currentUser.email ||
+        "User"
+      );
+
+      setText(
+        "accountRole",
+        data.role ||
+        "customer"
+      );
+
+      setText(
+        "accountPhone",
+        data.phone ||
+        "Phone not added"
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Account loading error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   AUTH STATE LISTENER
+   --------------------------------------------------------- */
+
+function setupAuthListener(){
+
+  if(!supabaseClient){
+    return;
+  }
+
+  supabaseClient.auth.onAuthStateChange(
+    async function(
+      event,
+      session
+    ){
+
+      currentUser =
+        session?.user ||
+        null;
+
+      if(currentUser){
+
+        await loadAccount();
+
+        await loadProfile();
+
+        await loadDashboard();
+
+        await loadMyJobs();
+
+        await loadServices();
+
+        await loadServiceOptions();
+
+        await loadProfessionalJobs();
+
+      }else{
+
+        /*
+          User logged out
+        */
+
+        console.log(
+          "No authenticated user."
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ---------------------------------------------------------
+   GET CURRENT SESSION
+   --------------------------------------------------------- */
+
+async function restoreSession(){
+
+  if(!supabaseClient){
+    return;
+  }
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .auth
+        .getSession();
+
+    if(error){
+      throw error;
+    }
+
+    currentUser =
+      data?.session?.user ||
+      null;
+
+    if(currentUser){
+
+      await loadAccount();
+
+      await loadProfile();
+
+      await loadDashboard();
+
+      await loadMyJobs();
+
+      await loadServices();
+
+      await loadServiceOptions();
+
+      await loadProfessionalJobs();
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Session restore error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   ACCOUNT MENU
+   --------------------------------------------------------- */
+
+function openAccountMenu(){
+
+  if(!currentUser){
+
+    toast(
+      "Please sign in first."
+    );
+
+    return;
+  }
+
+  const modal =
+    document.getElementById(
+      "modal"
+    );
+
+  const title =
+    document.getElementById(
+      "mt"
+    );
+
+  const body =
+    document.getElementById(
+      "mb"
+    );
+
+  if(!modal || !title || !body){
+    return;
+  }
+
+  title.textContent =
+    "Account";
+
+  body.innerHTML = `
+
+    <div class="form">
+
+      <div class="card">
+
+        <h3>
+          ${escapeHtml(
+            currentUser.email ||
+            "Signed in user"
+          )}
+        </h3>
+
+        <p class="muted">
+          Your HomeFix account is connected
+          to Supabase.
+        </p>
+
+      </div>
+
+      <button
+        class="btn outline"
+        onclick="go('profile');closeModal()">
+
+        Profile
+
+      </button>
+
+      <button
+        class="btn primary"
+        onclick="signOutUser()">
+
+        Sign out
+
+      </button>
+
+    </div>
+
+  `;
+
+  modal.classList.add(
+    "open"
+  );
+
+}
+
+
+/* ---------------------------------------------------------
+   REPLACE ACCOUNT DEMO
+   --------------------------------------------------------- */
+
+function accountDemo(){
+
+  openAccountMenu();
+
+}
+
+
+/* ---------------------------------------------------------
+   INITIALIZE REAL APP
+   --------------------------------------------------------- */
+
+async function initializeRealApp(){
+
+  try{
+
+    setupAuthListener();
+
+    await restoreSession();
+
+  }catch(error){
+
+    console.error(
+      "App initialization error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   PART 4-H END
+   /* ---------------------------------------------------------
+   PART 4-I — APP START
+   --------------------------------------------------------- */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async function(){
+
+    try{
+
+      await initializeRealApp();
+
+    }catch(error){
+
+      console.error(
+        "HomeFix startup error:",
+        error
+      );
+
+    }
+
+  }
+);
+
+
+/* ---------------------------------------------------------
+   PART 4-I END
+   /* ---------------------------------------------------------
+   PART 4-J — FINAL APP START
+   --------------------------------------------------------- */
+
+async function refreshUserData(){
+
+  if(!currentUser){
+    return;
+  }
+
+  try{
+
+    if(typeof loadAccount === "function"){
+      await loadAccount();
+    }
+
+    if(typeof loadProfile === "function"){
+      await loadProfile();
+    }
+
+    if(typeof loadDashboard === "function"){
+      await loadDashboard();
+    }
+
+    if(typeof loadMyJobs === "function"){
+      await loadMyJobs();
+    }
+
+    if(typeof loadServices === "function"){
+      await loadServices();
+    }
+
+    if(typeof loadServiceOptions === "function"){
+      await loadServiceOptions();
+    }
+
+    if(typeof loadProfessionalJobs === "function"){
+      await loadProfessionalJobs();
+    }
+
+  }catch(error){
+
+    console.error(
+      "HomeFix refresh error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   REAL ACCOUNT BUTTON
+   --------------------------------------------------------- */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    const accountButton =
+      document.querySelector(
+        '.top .btn.outline'
+      );
+
+    if(accountButton){
+
+      accountButton.onclick =
+        function(){
+
+          if(
+            typeof openAccountMenu ===
+            "function"
+          ){
+
+            openAccountMenu();
+
+          }else{
+
+            toast(
+              "Account is loading..."
+            );
+
+          }
+
+        };
+
+    }
+
+  }
+);
+
+
+/* ---------------------------------------------------------
+   REAL JOB POST BUTTON
+   --------------------------------------------------------- */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    const postButtons =
+      document.querySelectorAll(
+        '[onclick="postDemo()"]'
+      );
+
+    postButtons.forEach(
+      function(button){
+
+        button.onclick =
+          function(){
+
+            if(
+              typeof postRealJob ===
+              "function"
+            ){
+
+              postRealJob();
+
+            }else{
+
+              toast(
+                "Job system is loading..."
+              );
+
+            }
+
+          };
+
+      }
+    );
+
+  }
+);
+
+
+/* ---------------------------------------------------------
+   REAL APP READY
+   --------------------------------------------------------- */
+
+window.addEventListener(
+  "load",
+  async function(){
+
+    try{
+
+      if(
+        typeof initializeRealApp ===
+        "function"
+      ){
+
+        await initializeRealApp();
+
+      }
+
+      if(currentUser){
+
+        await refreshUserData();
+
+      }
+
+    }catch(error){
+
+      console.error(
+        "HomeFix startup error:",
+        error
+      );
+
+    }
+
+  }
+);
+
+
+/* ---------------------------------------------------------
+   PART 4-J END
+   --------------------------------------------------------- */
+
 </script>
 </body>
 </html>
+    ------------------------------------------ */
