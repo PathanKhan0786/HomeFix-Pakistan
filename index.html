@@ -6679,7 +6679,7 @@ function openAccountMenu(){
 }
 
 
-/* ---------------------------------------------------------
+ /* ---------------------------------------------------------
    REPLACE ACCOUNT DEMO
    --------------------------------------------------------- */
 
@@ -6716,9 +6716,12 @@ async function initializeRealApp(){
 
 /* ---------------------------------------------------------
    PART 4-H END
-   /* ---------------------------------------------------------
+--------------------------------------------------------- */
+
+
+/* ---------------------------------------------------------
    PART 4-I — APP START
-   --------------------------------------------------------- */
+--------------------------------------------------------- */
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -6740,6 +6743,62 @@ document.addEventListener(
   }
 );
 
+
+/* ---------------------------------------------------------
+   PART 4-I END
+--------------------------------------------------------- */
+
+
+/* ---------------------------------------------------------
+   PART 4-J — FINAL APP START
+--------------------------------------------------------- */
+
+async function refreshUserData(){
+
+  if(!currentUser){
+    return;
+  }
+
+  try{
+
+    if(typeof loadAccount === "function"){
+      await loadAccount();
+    }
+
+    if(typeof loadProfile === "function"){
+      await loadProfile();
+    }
+
+    if(typeof loadDashboard === "function"){
+      await loadDashboard();
+    }
+
+    if(typeof loadMyJobs === "function"){
+      await loadMyJobs();
+    }
+
+    if(typeof loadServices === "function"){
+      await loadServices();
+    }
+
+    if(typeof loadServiceOptions === "function"){
+      await loadServiceOptions();
+    }
+
+    if(typeof loadProfessionalJobs === "function"){
+      await loadProfessionalJobs();
+    }
+
+  }catch(error){
+
+    console.error(
+      "HomeFix refresh error:",
+      error
+    );
+
+  }
+
+    }
 
 /* ---------------------------------------------------------
    PART 4-I END
