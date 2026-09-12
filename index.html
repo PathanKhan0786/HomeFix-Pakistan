@@ -2055,49 +2055,297 @@ async function sendChat(){
   try{const {error}=await supabaseClient.from("messages").insert({job_id:currentChatJobId,sender_id:currentUser.id,message:text});if(error)throw error;input.value="";await loadChat(currentChatJobId);}catch(error){console.error(error);toast(error.message||"Message send نہیں ہو سکا۔");}
 }
 
-async function loadAdmin(){
-  if(!currentUser){setText("adminStatus","Please sign in with an admin account.");return;}
+ async function loadAdmin(){
+  if(!currentUser){
+    setText("adminStatus","Please sign in with an admin account.");
+    return;
+  }
+
   try{
     await ensureProfile();
-    if((currentProfile?.role||"")!=="admin"){setText("adminStatus","Admin access requires role = admin in profiles.");return;}
+
+    if((currentProfile?.role||"")!=="admin"){
+      setText("adminStatus","Admin access requires role = admin in profiles.");
+      return;
+    }
+
     const tables=["profiles","services","jobs","job_offers"];
-    const results=await Promise.all(tables.map(t=>supabaseClient.from(t).select("id",{count:"exact",head:true})));
-    results.forEach((r,i)=>{if(r.error)throw r.error;const n=r.count||0;if(tables[i]==="profiles")setText("adminProfilesCount",n);if(tables[i]==="services")setText("adminServicesCount",n);if(tables[i]==="jobs")setText("adminJobsCount",n);if(tables[i]==="job_offers")setText("adminOffersCount",n);});
-    const {count:customers,error:ce}=await supabaseClient.from("profiles").select("id",{count:"exact",head:true}).eq("role","customer");if(ce)throw ce;setText("adminCustomers",customers||0);
-    const {count:professionals,error:pe}=await supabaseClient.from("profiles").select("id",{count:"exact",head:true}).eq("role","professional");if(pe)throw pe;setText("adminProfessionals",professionals||0);
-    const {count:completed,error:je}=await supabaseClient.from("jobs").select("id",{count:"exact",head:true}).eq("status","completed");if(je)throw je;setText("adminCompleted",completed||0);
+
+    const results=await Promise.all(
+      tables.map(t =>
+        supabaseClient
+          .from(t)
+          .select("id",{count:"exact",head:true})
+      )
+    );
+
+    results.forEach((r,i)=>{
+      if(r.error) throw r.error;
+
+      const n=r.count||0;
+
+      if(tables[i]==="profiles"){
+        setText("adminProfilesCount",n);
+      }
+
+      if(tables[i]==="services"){
+        setText("adminServicesCount",n);
+      }
+
+      if(tables[i]==="jobs"){
+        setText("adminJobsCount",n);
+        setText("adminJobs",n);
+      }
+
+      if(tables[i]==="job_offers"){
+        setText("adminOffersCount",n);
+      }
+    });
+
+    const {
+      count:customers,
+      error:ce
+    } = await supabaseClient
+      .from("profiles")
+      .select("id",{count:"exact",head:true})
+      .eq("role","customer");
+
+    if(ce) throw ce;
+
+    setText("adminCustomers",customers||0);
+
+    const {
+      count:professionals,
+      error:pe
+    } = await supabaseClient
+      .from("profiles")
+      .select("id",{count:"exact",head:true})
+      .eq("role","professional");
+
+    if(pe) throw pe;
+
+    setText("adminProfessionals",professionals||0);
+
+    const {
+      count:completed,
+      error:je
+    } = await supabaseClient
+      .from("jobs")
+      .select("id",{count:"exact",head:true})
+      .eq("status","completed");
+
+    if(je) throw je;
+
+    setText("adminCompleted",completed||0);
+
     setText("adminStatus","Admin account connected to Supabase.");
-  }catch(error){console.error(error);setText("adminStatus","Admin data could not be loaded: "+error.message);}
+
+  }catch(error){
+    console.error(error);
+    setText(
+      "adminStatus",
+      "Admin data could not be loaded: "+error.message
+    );
+  }
 }
 
-function clearDashboard(){setText("statActiveJobs",0);setText("statOffers",0);setText("statSaved",0);setText("statCompleted",0);setText("profileCompleted",0);setText("profileOfferCount",0);if($("recentJobs"))$("recentJobs").innerHTML='<div class="empty">Sign in to load your real jobs.</div>';if($("myJobs"))$("myJobs").innerHTML='<div class="empty">Sign in to load your jobs.</div>';}
-async function afterAuth(){if(!currentUser)return;await loadProfile();await loadServices();await loadDashboard();await loadMyJobs();updateAccountUI();}
+function clearDashboard(){
+  setText("statActiveJobs",0);
+  setText("statOffers",0);
+  setText("statSaved",0);
+  setText("statCompleted",0);
+  setText("profileCompleted",0);
+  setText("profileOfferCount",0);
+
+  if($("recentJobs"))
+    $("recentJobs").innerHTML='<div class="empty">Sign in to load your real jobs.</div>';
+
+  if($("myJobs"))
+    $("myJobs").innerHTML='<div class="empty">Sign in to load your jobs.</div>';
+}
+
+async function afterAuth(){
+  if(!currentUser)return;
+  await loadProfile();
+  await loadServices();
+  await loadDashboard();
+  await loadMyJobs();
+  updateAccountUI();
+}
 
 async function restoreSession(){
-  if(!supabaseClient)return;try{const {data,error}=await supabaseClient.auth.getSession();if(error)throw error;currentUser=data.session?.user||null;updateAccountUI();if(currentUser)await afterAuth();}
-  catch(error){console.error("Session restore error:",error);}
+  if(!supabaseClient)return;
+
+  try{
+    const {data,error}=await supabaseClient.auth.getSession();
+
+    if(error)throw error;
+
+    currentUser=data.session?.user||null;
+    updateAccountUI();
+
+    if(currentUser)
+      await afterAuth();
+
+  }catch(error){
+    console.error("Session restore error:",error);
+  }
 }
-function watchAuth(){if(!supabaseClient)return;supabaseClient.auth.onAuthStateChange((event,session)=>{currentUser=session?.user||null;updateAccountUI();if(currentUser && event!=="SIGNED_OUT")setTimeout(()=>afterAuth(),0);if(event==="SIGNED_OUT"){currentProfile=null;clearDashboard();updateProfileUI();}});}
+
+function watchAuth(){
+  if(!supabaseClient)return;
+
+  supabaseClient.auth.onAuthStateChange((event,session)=>{
+    currentUser=session?.user||null;
+    updateAccountUI();
+
+    if(currentUser && event!=="SIGNED_OUT")
+      setTimeout(()=>afterAuth(),0);
+
+    if(event==="SIGNED_OUT"){
+      currentProfile=null;
+      clearDashboard();
+      updateProfileUI();
+    }
+  });
+}
 
 // Safe optional functions kept for existing UI compatibility.
-function loadAccount(){return loadProfile();}
-function accountDemo(){openAccount();}
-function postDemo(){postRealJob();}
-async function updateJobStatus(jobId,status){if(!currentUser)return toast("Please sign in first.");try{const {error}=await supabaseClient.from("jobs").update({status,updated_at:new Date().toISOString()}).eq("id",Number(jobId)).eq("customer_id",currentUser.id);if(error)throw error;toast("Job status updated.");await loadMyJobs();await loadDashboard();}catch(e){toast(e.message||"Status update failed.");}}
-async function cancelJob(jobId){if(!currentUser)return toast("Please sign in first.");const reason=prompt("Cancel reason:","");if(reason===null)return;await updateJobStatus(jobId,"cancelled");try{await supabaseClient.from("jobs").update({cancel_reason:reason.trim(),updated_at:new Date().toISOString()}).eq("id",Number(jobId)).eq("customer_id",currentUser.id);}catch(e){console.error(e);}}
+function loadAccount(){
+  return loadProfile();
+}
+
+function accountDemo(){
+  openAccount();
+}
+
+function postDemo(){
+  postRealJob();
+}
+
+async function updateJobStatus(jobId,status){
+  if(!currentUser)return toast("Please sign in first.");
+
+  try{
+    const {error}=await supabaseClient
+      .from("jobs")
+      .update({
+        status,
+        updated_at:new Date().toISOString()
+      })
+      .eq("id",Number(jobId))
+      .eq("customer_id",currentUser.id);
+
+    if(error)throw error;
+
+    toast("Job status updated.");
+    await loadMyJobs();
+    await loadDashboard();
+
+  }catch(e){
+    toast(e.message||"Status update failed.");
+  }
+}
+
+async function cancelJob(jobId){
+  if(!currentUser)return toast("Please sign in first.");
+
+  const reason=prompt("Cancel reason:","");
+
+  if(reason===null)return;
+
+  await updateJobStatus(jobId,"cancelled");
+
+  try{
+    await supabaseClient
+      .from("jobs")
+      .update({
+        cancel_reason:reason.trim(),
+        updated_at:new Date().toISOString()
+      })
+      .eq("id",Number(jobId))
+      .eq("customer_id",currentUser.id);
+
+  }catch(e){
+    console.error(e);
+  }
+}
 
 // Global search: simple real-data search without changing the UI.
 let searchTimer=null;
-function setupSearch(){const input=$("globalSearch");if(!input)return;input.addEventListener("input",()=>{clearTimeout(searchTimer);searchTimer=setTimeout(()=>searchSite(input.value.trim()),350);});}
-async function searchSite(term){if(!term||!supabaseClient)return;try{const {data,error}=await supabaseClient.from("services").select("id,name,description").eq("is_active",true).ilike("name",`%${term}%`).limit(10);if(error)throw error;if(data?.length){go("services");const grid=$("servicesGrid");if(grid)grid.innerHTML=data.map(s=>`<div class="card service" onclick="prefillService(${Number(s.id)})"><div class="ico">🛠️</div><h3>${escapeHtml(s.name)}</h3><p>${escapeHtml(s.description||"")}</p></div>`).join("");}}catch(e){console.error(e);}}
+
+function setupSearch(){
+  const input=$("globalSearch");
+
+  if(!input)return;
+
+  input.addEventListener("input",()=>{
+    clearTimeout(searchTimer);
+
+    searchTimer=setTimeout(
+      ()=>searchSite(input.value.trim()),
+      350
+    );
+  });
+}
+
+async function searchSite(term){
+  if(!term||!supabaseClient)return;
+
+  try{
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("services")
+      .select("id,name,description")
+      .eq("is_active",true)
+      .ilike("name",`%${term}%`)
+      .limit(10);
+
+    if(error)throw error;
+
+    if(data?.length){
+      go("services");
+
+      const grid=$("servicesGrid");
+
+      if(grid){
+        grid.innerHTML=data.map(s=>`
+          <div class="card service" onclick="prefillService(${Number(s.id)})">
+            <div class="ico">🛠️</div>
+            <h3>${escapeHtml(s.name)}</h3>
+            <p>${escapeHtml(s.description||"")}</p>
+          </div>
+        `).join("");
+      }
+    }
+
+  }catch(e){
+    console.error(e);
+  }
+}
 
 function initializeApp(){
   if(!initSupabase())return;
+
   setupSearch();
-  document.querySelectorAll(".side button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.screen)));
-  watchAuth();restoreSession();
+
+  document
+    .querySelectorAll(".side button")
+    .forEach(b=>b.addEventListener(
+      "click",
+      ()=>go(b.dataset.screen)
+    ));
+
+  watchAuth();
+  restoreSession();
 }
-document.addEventListener("DOMContentLoaded",initializeApp);
+
+document.addEventListener(
+  "DOMContentLoaded",
+  initializeApp
+);
 </script>
 </body>
 </html>
